@@ -39,6 +39,9 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
+# Temporary scratch scripts
+scratch/
+
 # Streamlit agent skills (environment-specific symlinks)
 .agents/skills/developing-with-streamlit
 .agents/
