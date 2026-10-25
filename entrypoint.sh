@@ -24,7 +24,7 @@ case "$MODE" in
     dashboard)
         echo "[IncuBrix Docker] Starting Streamlit dashboard on port ${STREAMLIT_SERVER_PORT:-8501}..."
         exec streamlit run app/frontend/app.py \
-            --server.port "${STREAMLIT_SERVER_PORT:-8501}" \
+            --server.port "${PORT:-${STREAMLIT_SERVER_PORT:-8501}}" \
             --server.address 0.0.0.0 \
             --server.headless true
         ;;

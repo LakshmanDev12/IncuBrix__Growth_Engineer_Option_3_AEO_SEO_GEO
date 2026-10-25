@@ -42,9 +42,5 @@ RUN mkdir -p /app/data /app/evidence/raw_responses /app/evidence/screenshots /ap
 # Expose FastAPI backend (8001) and Streamlit dashboard (8501)
 EXPOSE 8001 8501
 
-# Healthcheck targeting FastAPI health endpoint
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:8001/health || exit 1
-
 ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["all"]
