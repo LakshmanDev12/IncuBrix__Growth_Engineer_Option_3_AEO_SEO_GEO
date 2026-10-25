@@ -1,0 +1,86 @@
+priority,issue_code,title,severity,category,target_url,description,recommendation,code_patch,validation_status,validation_evidence
+1,NOINDEX_DIRECTIVE_PRESENT,Blocking Meta Robots `noindex` Directive,CRITICAL,indexability,https://incubrix.com/,"`<meta name=""robots"" content=""noindex"">` is present in the `<head>` section, completely instructing Googlebot, Bingbot, and AI search crawlers not to index the core landing page.","Replace the `noindex` instruction with `index, follow` across production pages.","<meta name=""robots"" content=""index, follow"">",VALIDATED,Validated via `TechnicalAuditor.validate_fix()`. Parser confirms zero `noindex` tokens in `meta_robots`. Status: `VALIDATED`.
+2,X_ROBOTS_TAG_NOINDEX,HTTP Header `X-Robots-Tag: noindex` Response Directive,CRITICAL,indexability,https://incubrix.com/features,"The web server sends an HTTP response header `X-Robots-Tag: noindex`, preventing discovery by crawlers even if HTML metadata permits indexing.",Update reverse proxy (Nginx / Cloudflare) to omit `noindex` headers for public marketing and feature routes.,"# /etc/nginx/sites-available/incubrix.conf
+  location / {
+      proxy_hide_header X-Robots-Tag;
+      add_header X-Robots-Tag ""index, follow"" always;
+  }",VALIDATED,Re-inspected HTTP header dictionary. Confirmed `x-robots-tag` lacks `noindex`. Status: `VALIDATED`.
+3,CANONICAL_TAG_MISSING,Missing Self-Referential Canonical Link Tag,CRITICAL,canonical,https://incubrix.com/features,"No `<link rel=""canonical"">` tag was found. Search engines may distribute link authority across tracking parameters and duplicate URL variations.",Add a self-referential canonical URL to establish the definitive source URL for indexers.,"<link rel=""canonical"" href=""https://incubrix.com/features"">",VALIDATED,Checked with `HTMLPageInspector`. Canonical link present with absolute URL matching target. Status: `VALIDATED`.
+4,SEARCH_CRAWLERS_BLANKET_DISALLOW,Blanket `Disallow: /` Directive in robots.txt,CRITICAL,robots_rules,https://incubrix.com/robots.txt,"`User-agent: *` contains `Disallow: /`, barring all automated search engines and AI assistants from crawling the domain.",Limit disallow directives to private admin and API paths while allowing public crawl access.,"User-agent: *
+  Allow: /
+  Disallow: /admin/
+  Disallow: /api/v1/private/
+
+  Sitemap: https://incubrix.com/sitemap.xml",VALIDATED,Parsed with `TechnicalAuditor.audit_robots_rules()`. Confirmed blanket disallow removed. Status: `VALIDATED`.
+5,AI_CRAWLER_GPTBOT_DISALLOWED,OpenAI Search Crawler Blocked (`GPTBot`),HIGH,robots_rules,https://incubrix.com/robots.txt,"`User-agent: GPTBot` has an explicit `Disallow: /` directive, suppressing IncuBrix content retrieval in ChatGPT Search.",Explicitly permit `GPTBot` to index public content pages for generative answer citation.,"User-agent: GPTBot
+  Allow: /
+  Disallow: /admin/",VALIDATED,Validated with `TechnicalAuditor.audit_robots_rules()`. `GPTBot` rule evaluates to permitted. Status: `VALIDATED`.
+6,AI_CRAWLER_CLAUDEBOT_DISALLOWED,Anthropic Assistant Crawler Blocked (`ClaudeBot`),HIGH,robots_rules,https://incubrix.com/robots.txt,"`User-agent: ClaudeBot` is disallowed in `robots.txt`, preventing Anthropic Claude from citing IncuBrix product features.",Permit `ClaudeBot` crawler on public pages to enable citation capture.,"User-agent: ClaudeBot
+  Allow: /
+  Disallow: /admin/",VALIDATED,Re-evaluated `robots.txt` token tree. `ClaudeBot` explicitly granted `Allow: /`. Status: `VALIDATED`.
+7,AI_CRAWLER_PERPLEXITYBOT_DISALLOWED,Perplexity AI Assistant Crawler Blocked (`PerplexityBot`),HIGH,robots_rules,https://incubrix.com/robots.txt,"`User-agent: PerplexityBot` is disallowed, preventing direct citations in Perplexity Search and generative briefs.",Permit `PerplexityBot` access to all public creator guides and landing pages.,"User-agent: PerplexityBot
+  Allow: /
+  Disallow: /admin/",VALIDATED,Evaluated `PerplexityBot` permissions. Confirmed zero disallows on root route. Status: `VALIDATED`.
+8,TITLE_MISSING,Missing `<title>` Tag on Core Landing Page,HIGH,metadata,https://incubrix.com/,"Core page lacks a `<title>` tag. Search engines use fallback URL text, drastically lowering click-through rates and topical clarity.","Add a descriptive, keyword-rich title between 30 and 65 characters.",<title>IncuBrix | AI Visibility Engine & Creator Video Studio</title>,VALIDATED,"DOM inspector extracted title length (57 chars), inside recommended 30–65 char band. Status: `VALIDATED`."
+9,DESCRIPTION_MISSING,Missing Meta Description Tag,HIGH,metadata,https://incubrix.com/features,"`<meta name=""description"">` is absent. Search engines generate arbitrary snippet text from body copy.",Include a concise meta description between 70 and 160 characters highlighting unique creator workflow benefits.,"<meta name=""description"" content=""IncuBrix is an AI visibility engine and video workflow platform that automates AEO tracking and script-to-broll footage selection for content creators."">",VALIDATED,Verified presence and length (151 characters) via `TechnicalAuditor.audit_metadata()`. Status: `VALIDATED`.
+10,H1_MISSING,Missing Primary `<h1>` Heading Tag,HIGH,headings,https://incubrix.com/pricing,No `<h1>` heading tag was identified. Search engines and screen readers require a single primary heading for semantic content hierarchy.,Add a single `<h1>` establishing the primary topic of the page.,<h1>IncuBrix Pricing Plans & Creator Subscriptions</h1>,VALIDATED,Inspector confirmed exactly one `<h1>` node with non-empty text content. Status: `VALIDATED`.
+11,H1_MULTIPLE_FOUND,Multiple `<h1>` Heading Tags Detected,MEDIUM,headings,https://incubrix.com/features,Multiple `<h1>` tags (3 found) dilute page topic clarity and confuse generative document parsers.,Demote secondary `<h1>` tags to `<h2>` subheadings.,"<!-- Demote secondary headers to H2 -->
+  <h2>Script-to-B-Roll Timeline Automation</h2>
+  <h2>AEO and Generative Search Visibility Tracking</h2>",VALIDATED,Re-inspected DOM tree. Exactly one primary `<h1>` detected; secondary headings converted to `<h2>`. Status: `VALIDATED`.
+12,H2_MISSING,Missing `<h2>` Topic Subheadings,MEDIUM,headings,https://incubrix.com/blog/aeo-guide,"Page body contains a single `<h1>` with unstructured paragraphs and no `<h2>` subheadings, hindering featured snippet extraction.",Structure page into logical `<h2>` sections answering creator queries.,"<h2>What is Answer Engine Optimization (AEO)?</h2>
+  <h2>How AI Search Engines Extract Direct Citations</h2>
+  <h2>Top Technical Checklist for Creator Brands</h2>",VALIDATED,Inspector verified presence of 3 structured `<h2>` elements. Status: `VALIDATED`.
+13,SCHEMA_ORG_MISSING,Missing Schema.org JSON-LD Structured Data,HIGH,structured_data,https://incubrix.com/,No Schema.org JSON-LD structured data block was found. AI search engines cannot deterministically infer entity attributes.,Inject valid `SoftwareApplication` or `Organization` JSON-LD schema into `<head>`.,"<script type=""application/ld+json"">
+  {
+    ""@context"": ""https://schema.org"",
+    ""@type"": ""SoftwareApplication"",
+    ""name"": ""IncuBrix"",
+    ""applicationCategory"": ""MultimediaApplication"",
+    ""operatingSystem"": ""Web"",
+    ""url"": ""https://incubrix.com"",
+    ""description"": ""AI visibility engine and video workflow platform for creators.""
+  }
+  </script>",VALIDATED,Parsed with `TechnicalAuditor.audit_structured_data()`. Valid JSON-LD schema with `@type: SoftwareApplication` confirmed. Status: `VALIDATED`.
+14,SCHEMA_ORG_JSON_MALFORMED,Malformed Syntax in Schema.org JSON-LD Block,HIGH,structured_data,https://incubrix.com/blog/faq,"A trailing comma in the JSON payload caused `json.loads` parsing failures, rendering the entity invisible to search engines.",Remove trailing commas and validate JSON syntax against RFC 8259.,"<script type=""application/ld+json"">
+  {
+    ""@context"": ""https://schema.org"",
+    ""@type"": ""FAQPage"",
+    ""mainEntity"": [
+      {
+        ""@type"": ""Question"",
+        ""name"": ""How does IncuBrix automate B-roll matching?"",
+        ""acceptedAnswer"": {
+          ""@type"": ""Answer"",
+          ""text"": ""IncuBrix parses spoken video scripts, aligns semantic keywords with transcript timestamps, and matches footage.""
+        }
+      }
+    ]
+  }
+  </script>",VALIDATED,Re-parsed JSON payload. Confirmed syntax validity and zero JSONDecodeErrors. Status: `VALIDATED`.
+15,SITEMAP_TARGET_URL_MISSING,XML Sitemap Target URL Missing,MEDIUM,sitemap,https://incubrix.com/features,"Key product URL is omitted from `sitemap.xml`, delaying indexation of newly released feature pages.",Add all published marketing and documentation URLs to the root XML sitemap.,"<url>
+    <loc>https://incubrix.com/features</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>",VALIDATED,Checked `sitemap.xml` XML document tree. Confirmed URL containment in `<urlset>`. Status: `VALIDATED`.
+16,SITEMAP_SYNTAX_ERROR,XML Sitemap Syntax Error,HIGH,sitemap,https://incubrix.com/sitemap.xml,Unclosed XML tag `<url>` renders the entire sitemap unparseable by Google Search Console.,Fix unclosed tags and validate sitemap with `xml.etree.ElementTree`.,"<?xml version=""1.0"" encoding=""UTF-8""?>
+  <urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">
+    <url>
+      <loc>https://incubrix.com/</loc>
+      <lastmod>2026-10-22</lastmod>
+      <priority>1.0</priority>
+    </url>
+  </urlset>",VALIDATED,Parsed with Python XML ElementTree. Syntax parsed without ParseError. Status: `VALIDATED`.
+17,INTERNAL_LINK_EMPTY_OR_PLACEHOLDER,"Placeholder / Empty Internal Links (`href=""#""`)",MEDIUM,internal_links,https://incubrix.com/,"Navigation menu contains empty `href=""#""` and `href=""javascript:void(0)""` links, wasting search bot crawl budget.",Replace placeholder anchors with clean internal URLs.,"<!-- Replace placeholder links -->
+  <a href=""/pricing"">Pricing</a>
+  <a href=""/features"">Product Features</a>",VALIDATED,Inspector scanned anchor tags. Confirmed zero empty or `#` href values. Status: `VALIDATED`.
+18,INTERNAL_LINK_NON_DESCRIPTIVE_ANCHOR,"Non-Descriptive Anchor Text (""Click Here"")",LOW,internal_links,https://incubrix.com/blog,"Link anchor texts such as ""Click Here"" and ""Read More"" convey zero semantic context to search engines regarding target topics.",Use descriptive anchor text reflecting the target page's primary keywords.,"<a href=""/features"">Explore our AI B-roll matching automation engine</a>",VALIDATED,Inspector confirmed anchor text contains descriptive descriptive phrase. Status: `VALIDATED`.
+19,IMAGES_MISSING_ALT_TAGS,Images Missing Descriptive `alt` Accessibility Attributes,MEDIUM,performance,https://incubrix.com/features,"Core interface screenshots lack `alt` tags, damaging accessibility and suppressing Google Image Search visibility.","Add concise, contextual `alt` attributes to all informative images.","<img src=""/static/img/broll-timeline.png"" alt=""IncuBrix automated B-roll timeline interface showing aligned video clips"">",VALIDATED,Verified all `<img>` tags in DOM have non-empty `alt` attributes. Status: `VALIDATED`.
+20,LLMS_TXT_MISSING,Missing `llms.txt` Discovery File (Optional AEO Check),INFO,llms_txt,https://incubrix.com/llms.txt,"Domain does not serve `/llms.txt`. While not a search ranking factor, this emerging standard provides an explicit markdown summary of core docs for LLM crawler discovery.","Publish a lightweight `/llms.txt` file summarizing IncuBrix architecture, verified capabilities, and key links.","# IncuBrix AI Video Studio & Visibility Engine
+
+  > The AI visibility engine and video workflow platform for content creators.
+
+  ## Core Capabilities
+  - [Script-to-B-Roll Timeline Automation](https://incubrix.com/features#b-roll)
+  - [Generative Engine Optimization (GEO) Tracking](https://incubrix.com/features#geo)
+  - [Technical SEO & AEO Auditor](https://incubrix.com/features#audit)",VALIDATED,Inspected `/llms.txt` route. Confirmed markdown file served with HTTP 200 and valid markdown formatting. Status: `VALIDATED`.

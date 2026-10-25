@@ -1,0 +1,44 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# Local databases and runtime evidence
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/*.csv
+!data/.gitkeep
+evidence/*
+!evidence/.gitkeep
+outputs/*
+!outputs/.gitkeep
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Streamlit agent skills (environment-specific symlinks)
+.agents/skills/developing-with-streamlit
+.agents/

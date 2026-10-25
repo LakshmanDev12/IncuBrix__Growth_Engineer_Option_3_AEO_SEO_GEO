@@ -1,0 +1,116 @@
+{
+  "_disclaimer": "TEST DATA ONLY: This dataset is synthetic and for unit testing/schema verification. It does NOT represent real search or AI visibility evidence.",
+  "questions": [
+    {
+      "id": "q-test-0001",
+      "text": "How do creators turn long scripts into engaging video b-roll?",
+      "target_market": "US",
+      "target_location": "New York, NY",
+      "language": "en",
+      "intent": "informational",
+      "persona": "video_editor",
+      "tags": ["script-to-video", "b-roll", "workflow"],
+      "is_active": true
+    },
+    {
+      "id": "q-test-0002",
+      "text": "Best tools to automate stock footage selection from voiceover transcript",
+      "target_market": "US",
+      "target_location": "San Francisco, CA",
+      "language": "en",
+      "intent": "commercial",
+      "persona": "youtube_creator",
+      "tags": ["stock-footage", "automation", "transcription"],
+      "is_active": true
+    }
+  ],
+  "evidence_artifacts": [
+    {
+      "id": "ev-test-0001",
+      "question_id": "q-test-0001",
+      "artifact_type": "raw_text",
+      "content": "TEST DATA: Synthetic simulated response text snippet demonstrating automated b-roll alignment with speech.",
+      "source_url": "https://example.com/test-article",
+      "collected_by": "synthetic_test_generator",
+      "content_hash": "a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+      "metadata": {
+        "engine": "synthetic_mock_engine",
+        "is_test_fixture": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs-test-0001",
+      "question_id": "q-test-0001",
+      "market": "US",
+      "location": "New York, NY",
+      "measured_at": "2026-10-21T12:00:00Z",
+      "provider": "google_search",
+      "observation_type": "search_engine",
+      "raw_answer": "TEST DATA: Synthetic search result snippet for testing.",
+      "artifact_id": "ev-test-0001",
+      "incubrix_mentioned": "mentioned",
+      "incubrix_cited": "cited",
+      "competitors_observed": ["CompetitorVideoCorp", "ToolX"],
+      "quoted_domains": ["incubrix.com", "competitor.io"],
+      "rank_position": 2,
+      "answer_box_present": true,
+      "collection_status": "success",
+      "error_code": null,
+      "error_details": null,
+      "fingerprint": "fp-test-0001",
+      "visibility_score": 80
+    },
+    {
+      "id": "obs-test-0002",
+      "question_id": "q-test-0002",
+      "market": "US",
+      "location": null,
+      "measured_at": "2026-10-21T12:05:00Z",
+      "provider": "chatgpt",
+      "observation_type": "ai_assistant",
+      "raw_answer": "TEST DATA: Synthetic ChatGPT assistant answer without web citations.",
+      "artifact_id": null,
+      "incubrix_mentioned": "unknown",
+      "incubrix_cited": "unavailable",
+      "competitors_observed": [],
+      "quoted_domains": [],
+      "rank_position": null,
+      "answer_box_present": null,
+      "collection_status": "success",
+      "error_code": null,
+      "error_details": null,
+      "fingerprint": "fp-test-0002",
+      "visibility_score": null
+    }
+  ],
+  "audit_findings": [
+    {
+      "id": "audit-test-0001",
+      "target_url": "https://example.incubrix.test/robots.txt",
+      "audit_category": "crawlability",
+      "issue_code": "AI_BOTS_PERMITTED",
+      "severity": "info",
+      "status": "pass",
+      "description": "TEST DATA: Synthetic test finding indicating AI bot access.",
+      "recommendation": "Maintain robots.txt permissions.",
+      "raw_metrics": { "is_test": true }
+    }
+  ],
+  "content_briefs": [
+    {
+      "id": "brief-test-0001",
+      "question_id": "q-test-0001",
+      "target_topic": "Creator Guide: Long script to b-roll automation",
+      "target_query": "How do creators turn long scripts into engaging video b-roll?",
+      "primary_intent": "informational",
+      "target_entities": ["IncuBrix", "AI Video Workflow", "B-roll Automation"],
+      "required_sections": ["1. Executive Summary", "2. B-roll Matching"],
+      "recommended_faqs": ["Q: How to automate?\\nA: Use IncuBrix engine."],
+      "target_word_count": 1200,
+      "tone": "expert and concise",
+      "schema_type": "TechArticle"
+    }
+  ]
+}

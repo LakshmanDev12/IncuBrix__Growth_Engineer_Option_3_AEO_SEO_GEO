@@ -1,0 +1,101 @@
+Q#,Question Text,Intent,Market,Location,Source Platform,Google Day 1,Google Day 2,AI Overviews?,ChatGPT Mentions?,Perplexity Cites?,Claude Mentions?,Gemini Mentions?,Key Competitor Cited
+1,How can video creators automate b-roll selection using AI?,Informational,US,"New York, NY",Google Search Suggestions,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),Yes,Yes,Runway
+2,Best AI tools to automatically add b-roll to talking head videos,Commercial,US,"San Francisco, CA",Reddit r/VideoEditing,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),Yes,No,CapCut
+3,How to turn podcast audio into video with automated visual b-roll,Informational,US,"Austin, TX",YouTube Creator Community,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,Veed
+4,How does script-to-broll automation match stock footage to speech?,Informational,US,"Los Angeles, CA",Google People Also Ask,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,InVideo
+5,Can AI automatically detect video script pacing and insert stock clips?,Informational,UK,"London, UK",Quora,Unranked,Unranked,No,No,No,No,No,Pika
+6,What are the best free tools for automatic b-roll generation for YouTube?,Commercial,IN,"Bengaluru, IN",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,HeyGen
+7,How to generate cinematic b-roll for faceless YouTube channels with AI,Informational,IN,"Mumbai, IN",Reddit r/YouTube,Unranked,Unranked,No,No,No,No,No,Pictory
+8,Tools that automatically pull stock video clips based on transcript keywords,Commercial,US,"Chicago, IL",Google Search Suggestions,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Opus Clip
+9,How do solo content creators produce high-retention video without manual b-roll editing?,Informational,US,"Seattle, WA",Substack Creator Weekly,Unranked,Unranked,No,No,No,No,No,Synthesia
+10,Best AI b-roll plugin for DaVinci Resolve and Premiere Pro workflows,Commercial,US,"Denver, CO",Reddit r/premiere,Unranked,Unranked,No,No,No,No,No,Adobe Premiere
+11,How to automate commercial license stock footage selection for client videos,Informational,US,"Boston, MA",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,DaVinci Resolve
+12,How to turn voiceover MP3 into video with relevant background footage,Informational,UK,"Manchester, UK",Quora,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Submagic
+13,How to sync stock video cuts with speech emphasis in video essays,Informational,US,"New York, NY",Reddit r/VideoEditing,Unranked,Unranked,No,No,No,No,No,Klap
+14,What is the fastest way to add B-roll to 1-hour interview podcasts?,Informational,US,"Atlanta, GA",YouTube Creator Community,Unranked,Unranked,No,No,No,No,No,Descript
+15,Best budget AI video b-roll maker for educational course creators,Commercial,IN,"New Delhi, IN",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Runway
+16,Can AI match local archive footage to video scripts instead of stock sites?,Informational,US,"San Francisco, CA",Google People Also Ask,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,CapCut
+17,How to avoid copyright strikes when using automated AI stock footage,Informational,US,"Austin, TX",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,Veed
+18,How to automate vertical b-roll selection for TikTok and Instagram Reels,Informational,UK,"London, UK",Reddit r/Tiktokhelp,Unranked,Unranked,No,No,No,No,No,InVideo
+19,Best tool to automatically create educational explainer videos from text notes,Commercial,IN,"Hyderabad, IN",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Pika
+20,How to train an AI model on brand footage archives for automated editing,Informational,US,"San Jose, CA",Google People Also Ask,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,HeyGen
+21,How to automatically turn long webinars into viral shorts with AI,Informational,US,"New York, NY",Google Search Suggestions,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,Pictory
+22,Best AI repurposing tool to extract viral clips from YouTube podcasts,Commercial,US,"San Francisco, CA",Reddit r/Podcasting,Unranked,Unranked,No,No,No,No,No,Opus Clip
+23,How to find the most engaging 30 seconds of a podcast automatically,Informational,US,"Austin, TX",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,Synthesia
+24,How to convert blog posts into short video scripts with matching b-roll,Informational,UK,"London, UK",Quora,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Adobe Premiere
+25,Best workflow to repurpose 1 long YouTube video into 10 TikTok clips,Commercial,US,"Los Angeles, CA",YouTube Creator Community,Unranked,Unranked,No,No,No,No,No,DaVinci Resolve
+26,How to automatically reframe horizontal video to vertical with face tracking,Informational,US,"Chicago, IL",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Submagic
+27,Can AI identify key moments in gaming streams for highlight reels?,Informational,US,"Seattle, WA",Reddit r/Twitch,Unranked,Unranked,No,No,No,No,No,Klap
+28,How to automate captioning and clip extraction for weekly podcast episodes,Informational,UK,"Edinburgh, UK",Google People Also Ask,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Descript
+29,Free tools to convert audio interviews into animated audiograms with b-roll,Commercial,IN,"Bengaluru, IN",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Runway
+30,How to repurpose client testimonials into social video ads with AI,Informational,US,"Miami, FL",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,CapCut
+31,Best AI tools for automated YouTube Shorts creation in 2026,Commercial,IN,"Mumbai, IN",YouTube Creator Community,Unranked,Unranked,No,No,No,No,No,Veed
+32,How to generate short video teasers from long conference keynotes,Informational,US,"Boston, MA",Quora,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,InVideo
+33,How do content agencies batch create 50 shorts per week using AI?,Informational,US,"Dallas, TX",Reddit r/Entrepreneur,Unranked,Unranked,No,No,No,No,No,Pika
+34,Can you automate YouTube chapter markers and clip extraction from transcripts?,Informational,UK,"Manchester, UK",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,HeyGen
+35,Best tool to turn Zoom sales calls into bite-sized training clips,Commercial,US,"Atlanta, GA",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Pictory
+36,"How to remove pauses, filler words, and silence automatically from video",Informational,US,"New York, NY",Google Search Suggestions,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Opus Clip
+37,Best text-based video editors that let you edit video by editing transcripts,Commercial,US,"San Francisco, CA",Reddit r/VideoEditing,Unranked,Unranked,No,No,No,No,No,Synthesia
+38,How does automated J-cut and L-cut audio transition work in AI editors?,Informational,US,"Los Angeles, CA",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,Adobe Premiere
+39,How to automatically balance voiceover levels and background music in video,Informational,UK,"London, UK",Quora,Unranked,Unranked,No,No,No,No,No,DaVinci Resolve
+40,Best AI video tool for color grading and auto-correcting creator footage,Commercial,US,"Austin, TX",Google Search Suggestions,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Submagic
+41,How to create dynamic jump cuts and zoom-ins automatically from a script,Informational,US,"Chicago, IL",YouTube Creator Community,Unranked,Unranked,No,No,No,No,No,Klap
+42,Tools that automatically match video cuts to music beat drops,Commercial,US,"San Diego, CA",Reddit r/premiere,Unranked,Unranked,No,No,No,No,No,Descript
+43,How to generate smooth speed ramps in video using AI frame interpolation,Informational,UK,"Bristol, UK",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,Runway
+44,Best free AI video editor for beginner creators with zero editing experience,Commercial,IN,"Bengaluru, IN",Google Search Suggestions,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,CapCut
+45,How to automate multi-cam switching based on which speaker is talking,Informational,US,"Seattle, WA",Quora,Unranked,Unranked,No,No,No,No,No,Veed
+46,How to normalize audio loudness for YouTube and Spotify video podcasts,Informational,US,"New York, NY",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,InVideo
+47,Can AI clean background hum and echo from creator phone recordings?,Informational,IN,"Pune, IN",Reddit r/audiorepair,Unranked,Unranked,No,No,No,No,No,Pika
+48,How to automate video intros and outro bumper animations with AI,Informational,US,"Phoenix, AZ",Google Search Suggestions,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,HeyGen
+49,Best AI video assembly pipeline for real estate agent home tour videos,Commercial,US,"Miami, FL",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Pictory
+50,How to edit a 10-minute video in under 5 minutes using AI workflow tools,Informational,UK,"London, UK",YouTube Creator Community,Unranked,Unranked,No,No,No,No,No,Opus Clip
+51,How to generate animated Hormozi-style dynamic captions automatically,Informational,US,"New York, NY",Google Search Suggestions,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,Synthesia
+52,Best AI caption generators with word-by-word highlight and emojis,Commercial,US,"Los Angeles, CA",Reddit r/Tiktokhelp,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,Adobe Premiere
+53,How accurate is AI speech-to-text for heavy regional accents in English?,Informational,UK,"Glasgow, UK",Google People Also Ask,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,DaVinci Resolve
+54,How to translate and dub English YouTube videos into Hindi and Spanish with AI,Informational,IN,"New Delhi, IN",YouTube Creator Community,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,Submagic
+55,How to burn open captions into video without losing 4K resolution,Informational,US,"San Francisco, CA",Quora,Unranked,Unranked,No,No,No,No,No,Klap
+56,Best automated subtitle tool that exports clean SRT and VTT with timestamps,Commercial,US,"Austin, TX",Google Search Suggestions,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Descript
+57,How to automatically sync translated voiceovers with speaker lip movements,Informational,US,"Seattle, WA",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,Runway
+58,What are the best caption styles for increasing short-form video retention?,Informational,US,"Chicago, IL",Substack Creator Weekly,Unranked,Unranked,No,No,No,No,No,CapCut
+59,How to auto-detect profanity and bleep sensitive words in video subtitles,Informational,UK,"London, UK",Reddit r/VideoEditing,Unranked,Unranked,No,No,No,No,No,Veed
+60,Free captioning tools for Indian YouTube creators with multi-language support,Commercial,IN,"Chennai, IN",Google Search Suggestions,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,InVideo
+61,How to format multi-speaker interview captions with distinct color badges,Informational,US,"Boston, MA",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,Pika
+62,How to fix out-of-sync audio subtitles when exporting 60fps video,Informational,US,"Denver, CO",Reddit r/premiere,Unranked,Unranked,No,No,No,No,No,HeyGen
+63,Best AI voice clone tools for translating creator tutorials into French,Commercial,UK,"Manchester, UK",Quora,Unranked,Unranked,No,No,No,No,No,Pictory
+64,Can AI transcribe technical programming terms without spelling errors?,Informational,US,"San Jose, CA",Reddit r/programming,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Opus Clip
+65,How to auto-generate subtitles for 100 YouTube videos in batch mode,Informational,IN,"Bengaluru, IN",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Synthesia
+66,Descript vs CapCut for automatic b-roll: which is better in 2026?,Commercial,US,"New York, NY",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Adobe Premiere
+67,Runway Gen-2 vs Pika vs Sora: best text-to-video tool for creators,Commercial,US,"San Francisco, CA",Reddit r/artificial,Unranked,Unranked,No,No,No,No,No,DaVinci Resolve
+68,IncuBrix vs InVideo: which has better automated script-to-broll matching?,Commercial,US,"Los Angeles, CA",Google Search Suggestions,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Submagic
+69,CapCut vs Opus Clip: best tool for auto-generating viral TikTok shorts,Commercial,UK,"London, UK",YouTube Creator Community,Unranked,Unranked,No,No,No,No,No,Klap
+70,Best AI video generator for small business marketing on a budget,Commercial,US,"Austin, TX",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Descript
+71,HeyGen vs Synthesia: which AI avatar platform has more realistic voice and gestures?,Commercial,US,"Chicago, IL",Quora,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,Runway
+72,Pictory vs IncuBrix: comparing script-to-video workflow and stock library quality,Commercial,US,"Seattle, WA",Google Search Suggestions,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,CapCut
+73,Premiere Pro AI features vs DaVinci Resolve 19 Studio: creator comparison,Commercial,UK,"Manchester, UK",Reddit r/editors,#3,#2,Yes (Quotes runway.com),Yes,Yes (Cited),No,No,Veed
+74,Best AI tool for podcasters to create audiograms and b-roll clips,Commercial,US,"Atlanta, GA",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,InVideo
+75,Veed.io vs Kapwing vs IncuBrix: online video editing tools compared,Commercial,US,"Denver, CO",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Pika
+76,Best AI thumbnail generators that predict click-through rate (CTR),Commercial,IN,"Bengaluru, IN",YouTube Creator Community,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,HeyGen
+77,Submagic vs Captions App: which produces better animated short-form subtitles?,Commercial,US,"Miami, FL",Reddit r/Tiktokhelp,Unranked,Unranked,No,No,No,No,No,Pictory
+78,Adobe Firefly Video Model vs Runway Gen-3: feature and licensing comparison,Commercial,US,"San Jose, CA",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Opus Clip
+79,Klap vs Munch vs Opus Clip: which AI repurposing tool finds the best clips?,Commercial,UK,"London, UK",Quora,Unranked,Unranked,No,No,No,No,No,Synthesia
+80,Best free open source AI video generation tools you can run locally,Commercial,IN,"Hyderabad, IN",Reddit r/StableDiffusion,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Adobe Premiere
+81,Riverside.fm vs Descript for recording and editing remote podcast interviews,Commercial,US,"New York, NY",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,DaVinci Resolve
+82,Can Canva's AI video tools replace standalone video editing software?,Commercial,UK,"Leeds, UK",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Submagic
+83,Best AI B-roll tools for Indian creators with low-spec PCs,Commercial,IN,"Mumbai, IN",YouTube Creator Community,Unranked,Unranked,No,No,No,No,No,Klap
+84,ElevenLabs vs Murf.ai: best AI voiceover platform for video narration,Commercial,US,"San Francisco, CA",Reddit r/voiceacting,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Descript
+85,What are the best alternatives to Descript with better stock footage licensing?,Commercial,US,"Austin, TX",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,Runway
+86,What is Generative Engine Optimization (GEO) and how does it differ from SEO?,Informational,US,"New York, NY",Google Search Suggestions,Unranked,Unranked,No,No,No,No,No,CapCut
+87,How do AI answer engines like Perplexity choose which sources and tools to cite?,Informational,US,"San Francisco, CA",Search Engine Journal,Unranked,Unranked,No,No,No,No,No,Veed
+88,What technical SEO factors affect whether Google AI Overviews feature your content?,Informational,US,"Austin, TX",Google Search Central,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,InVideo
+89,"How does robots.txt impact AI crawlers like GPTBot, ClaudeBot, and PerplexityBot?",Informational,US,"Chicago, IL",Search Engine Land,Unranked,Unranked,No,No,No,No,No,Pika
+90,Why is Schema.org structured data essential for Answer Engine Optimization (AEO)?,Informational,UK,"London, UK",W3C Schema Community,Unranked,Unranked,No,No,No,No,No,HeyGen
+91,What are the best practices for structuring FAQ blocks for AI search retrieval?,Informational,US,"Los Angeles, CA",HubSpot Marketing Blog,Unranked,Unranked,No,No,No,No,No,Pictory
+92,How can video software companies track brand mentions in ChatGPT and Claude?,Informational,US,"Seattle, WA",MarTech Series,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Opus Clip
+93,How to identify and bridge competitive citation gaps in generative AI engines,Informational,US,"Boston, MA",Search Engine Watch,Unranked,Unranked,No,No,No,No,No,Synthesia
+94,How to optimize video scripts so AI assistants quote your software as the primary tool,Informational,UK,"Manchester, UK",Quora,Unranked,Unranked,No,No,No,No,No,Adobe Premiere
+95,Does blocking AI crawlers in robots.txt hurt your Google organic ranking?,Informational,US,"New York, NY",Google Search Central Forum,Unranked,Unranked,No,No,No,No,No,DaVinci Resolve
+96,What is an llms.txt file and how does it help AI search engines index your product?,Informational,US,"San Jose, CA",GitHub llms-txt specification,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,Submagic
+97,How to optimize software documentation for ChatGPT Search and Perplexity retrieval,Informational,IN,"Bengaluru, IN",Reddit r/SEO,Unranked,Unranked,No,No,No,No,No,Klap
+98,How do generative AI engines detect commercial intent in creator tool questions?,Informational,US,"Austin, TX",Google People Also Ask,Unranked,Unranked,No,No,No,No,No,Descript
+99,What metrics matter most for measuring brand visibility across AI assistants?,Informational,UK,"London, UK",Substack Growth Memo,Unranked,Unranked,No,No,No,No,No,Runway
+100,How to get your SaaS tool included in AI comparison tables on Perplexity and ChatGPT,Informational,IN,"Pune, IN",Reddit r/SaaS,Unranked,Unranked,Yes (Quotes runway.com),No,No,No,No,CapCut

@@ -1,0 +1,3862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vk Analysis · All Pages UI Showcase</title>
+</head>
+<body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Reset and Streamlit overrides */
+.main > div { padding: 0 !important; }
+.block-container { padding: 0 !important; max-width: 100% !important; }
+[data-testid="stSidebar"] { display: none !important; }
+header[data-testid="stHeader"],
+[data-testid="stDecoration"],
+[data-testid="stToolbar"],
+div[data-testid="stHeader"],
+[data-testid="stSpinner"],
+.stSpinner {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  z-index: -9999 !important;
+}
+
+:root {
+  --canvas: #000;
+  --card: #111;
+  --line: #262626;
+  --ink: #fafafa;
+  --ink-rgb: 250,250,250;
+  --muted: #a3a3a3;
+  --soft: #171717;
+  --band: #0a0a0a;
+  --ok: #22c55e;
+  --warn: #eab308;
+  --bad: #ef4444;
+  box-sizing: border-box;
+  background: var(--canvas);
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+body, [data-testid="stAppViewContainer"] {
+  background: radial-gradient(rgba(var(--ink-rgb),.08) 1px, transparent 1.3px) 0 0/22px 22px, var(--canvas) !important;
+  color: var(--ink) !important;
+  font: 14px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
+}
+
+.mono { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; }
+
+/* Top Hero Band: Transparent with Gradient Title & Colorful Elements */
+.band {
+  position: relative;
+  overflow: visible !important;
+  background: transparent !important;
+  color: var(--ink) !important;
+  padding-bottom: 110px;
+  z-index: 100 !important;
+  pointer-events: none;
+}
+
+.band > * {
+  pointer-events: auto;
+}
+
+.bg, body::before {
+  display: none !important;
+}
+
+/* Shell Container */
+.wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+  z-index: 20;
+}
+
+/* Top Navigation Bar */
+.top {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 64px;
+  border-bottom: 1px solid var(--line) !important;
+  position: relative;
+  z-index: 30;
+  pointer-events: auto !important;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  font-size: 17px;
+  flex: none;
+  text-decoration: none;
+  color: var(--ink);
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 50;
+  user-select: none !important;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #0a0a0a;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+nav {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  flex: 1;
+  scrollbar-width: none;
+  position: relative;
+  z-index: 40;
+  pointer-events: auto !important;
+}
+nav::-webkit-scrollbar { display: none; }
+
+nav a {
+  color: var(--muted) !important;
+  padding: 8px 14px !important;
+  border-radius: 99px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: .15s !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 50 !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+nav a:hover {
+  color: var(--ink) !important;
+  background: rgba(var(--ink-rgb), .06) !important;
+}
+
+nav a.on {
+  color: #fff !important;
+  background: linear-gradient(135deg, #7c3aed, #ec4899) !important;
+  box-shadow: 0 6px 18px rgba(236,72,153,.35) !important;
+  font-weight: 600 !important;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: none;
+}
+
+.gw {
+  font-size: 12px;
+  color: var(--muted) !important;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line) !important;
+  padding: 5px 12px;
+  border-radius: 99px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px rgba(34,197,94,.22);
+  display: inline-block;
+}
+
+.av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #555, #222);
+  border: 1px solid #444;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Hero Section */
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 40px;
+  align-items: center;
+  padding-top: 44px;
+  position: relative;
+  z-index: 120 !important;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted) !important;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+h1 {
+  font-size: 46px !important;
+  line-height: 1.05 !important;
+  letter-spacing: -.035em !important;
+  font-weight: 800 !important;
+  margin: 12px 0 10px !important;
+  background: linear-gradient(90deg, #7c3aed, #ec4899 55%, #f59e0b) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+.lead {
+  color: var(--muted) !important;
+  max-width: 520px;
+  font-size: 15px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  align-items: center;
+  position: relative;
+  z-index: 150 !important;
+}
+
+.seg {
+  display: flex;
+  border: 1px solid var(--line) !important;
+  border-radius: 99px;
+  padding: 3px;
+  background: transparent !important;
+}
+
+.seg a, .seg button {
+  background: none;
+  border: 0;
+  color: var(--muted) !important;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font: 500 13px Inter, sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: .15s;
+}
+
+.seg a.on, .seg button.on {
+  background: linear-gradient(135deg, #06b6d4, #3b82f6) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+/* Creative Glass Dropdowns with Details & Hover Support */
+.c-dd {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  z-index: 200;
+}
+
+.c-dd[open],
+.c-dd:hover {
+  z-index: 99999 !important;
+}
+
+details.c-dd summary {
+  list-style: none !important;
+  outline: none !important;
+}
+
+details.c-dd summary::-webkit-details-marker {
+  display: none !important;
+}
+
+.c-dd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(18, 18, 24, 0.75) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 99px !important;
+  padding: 8px 16px;
+  font: 500 13px Inter, sans-serif;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.c-dd-btn:hover,
+.c-dd[open] > .c-dd-btn,
+.c-dd:hover > .c-dd-btn,
+.c-dd.open > .c-dd-btn {
+  border-color: rgba(139, 92, 246, 0.55) !important;
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.25);
+  background: rgba(28, 28, 38, 0.95) !important;
+  color: #fff !important;
+}
+
+.c-dd-arrow {
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
+  transform: rotate(45deg);
+  margin-left: 3px;
+  margin-bottom: 2px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.c-dd[open] > .c-dd-btn .c-dd-arrow,
+.c-dd:hover > .c-dd-btn .c-dd-arrow,
+.c-dd.open > .c-dd-btn .c-dd-arrow {
+  transform: rotate(-135deg) !important;
+  margin-bottom: -2px !important;
+  border-color: #a78bfa !important;
+}
+
+.c-dd-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 250px;
+  background: rgba(14, 14, 20, 0.98) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 14px !important;
+  padding: 6px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  z-index: 100000 !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.97);
+  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
+  pointer-events: none;
+}
+
+.c-dd[open] > .c-dd-menu,
+.c-dd:hover > .c-dd-menu,
+.c-dd.open > .c-dd-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: auto !important;
+}
+
+.c-dd-heading {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding: 6px 10px 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 4px;
+}
+
+.c-dd-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.c-dd-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 9px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  margin-bottom: 2px;
+}
+
+.c-dd-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(2px);
+  color: #fff;
+}
+
+.c-dd-item.selected {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.28), rgba(236, 72, 153, 0.22));
+  border: 1px solid rgba(139, 92, 246, 0.45);
+  color: #fff;
+}
+
+.c-dd-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.c-dd-item-flag {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.c-dd-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.c-dd-item-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.c-dd-item-desc {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.c-dd-item.selected .c-dd-item-desc {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.c-dd-check {
+  font-size: 12px;
+  color: #a78bfa;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* Hardened fallback for native selects */
+select, .filters select {
+  background: rgba(18, 18, 24, 0.8) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 99px;
+  padding: 8px 14px;
+  font: 500 13px Inter, sans-serif;
+  color-scheme: dark !important;
+}
+
+select option, .filters select option {
+  background: #141418 !important;
+  color: #fafafa !important;
+  padding: 10px 14px !important;
+}
+
+.btn {
+  background: linear-gradient(135deg, #7c3aed, #ec4899) !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 99px !important;
+  padding: 9px 20px !important;
+  font: 600 13px Inter, sans-serif !important;
+  cursor: pointer !important;
+  transition: .15s !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 24px rgba(236,72,153,.4) !important;
+}
+
+.score {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ring {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+
+.ring svg, .ring canvas, .ring img {
+  display: block;
+  width: 170px;
+  height: 170px;
+}
+
+.ring-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.ring-score {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.ring-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+  margin-top: 4px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mini div {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  font-size: 13px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line) !important;
+  color: var(--muted) !important;
+  min-width: 180px;
+}
+
+.mini b {
+  color: var(--ink) !important;
+  font-weight: 600;
+}
+
+/* Main Cards Overlap Area */
+.main {
+  margin-top: -70px;
+  position: relative;
+  z-index: 1 !important;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.card {
+  background: color-mix(in srgb, var(--card) 62%, transparent) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 16px !important;
+  padding: 20px;
+  min-width: 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+
+.kpi {
+  border-top: 3px solid #06b6d4 !important;
+}
+.kpi:nth-child(2) {
+  border-top-color: #f59e0b !important;
+}
+.kpi:nth-child(3) {
+  border-top-color: #10b981 !important;
+}
+.kpi:nth-child(2) .sp {
+  stroke: #f59e0b !important;
+}
+.kpi:nth-child(3) .sp {
+  stroke: #10b981 !important;
+}
+
+.kpi .l {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kpi .v {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  margin: 6px 0 2px;
+}
+
+.kpi .d {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.kpi.dark {
+  background: linear-gradient(135deg, #7c3aed, #ec4899) !important;
+  color: #fff !important;
+  border: 0 !important;
+}
+
+.kpi.dark .l, .kpi.dark .d { color: rgba(255,255,255,.85) !important; }
+.kpi.dark .sp { stroke: #fff !important; }
+.kpi.dark .pill {
+  background: rgba(255,255,255,.22) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+
+.pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: rgba(124,58,237,.12) !important;
+  color: #7c3aed !important;
+  border: 1px solid transparent !important;
+}
+
+.spark, .spark-canvas, .kpi img {
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  height: 32px;
+}
+
+.sp {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* Grid systems */
+.g { display: grid; gap: 14px; margin-bottom: 14px; }
+.c2 { grid-template-columns: 1.7fr 1fr; }
+.c11 { grid-template-columns: 1fr 1fr; }
+
+h3 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+
+h3 small {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+svg text { fill: var(--muted); font: 11px Inter, sans-serif; }
+.ln { stroke: var(--line); }
+
+#fade stop { stop-color: #8b5cf6 !important; }
+.l1 { fill: none; stroke: #8b5cf6 !important; stroke-width: 2.5; stroke-linejoin: round; }
+.l2 { fill: none; stroke: #06b6d4 !important; stroke-width: 2; stroke-dasharray: 4 4; stroke-linejoin: round; }
+.ar { fill: url(#fade); }
+
+.leg {
+  display: flex;
+  gap: 22px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 16px;
+  align-items: center;
+}
+
+.leg span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.leg i {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  background: #8b5cf6 !important;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+.leg i.d {
+  background: repeating-linear-gradient(90deg, #06b6d4 0 4px, transparent 4px 7px) !important;
+}
+
+/* Heatmap */
+.heat {
+  display: grid;
+  grid-template-columns: 80px repeat(6, 1fr);
+  gap: 5px;
+  font-size: 11px;
+  color: var(--muted);
+  align-items: center;
+}
+
+.heat div.c {
+  height: 34px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.heat .h { text-align: center; }
+
+/* Progress bars */
+.bars .r {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 13px 0;
+  font-size: 13px;
+}
+
+.bars .n { width: 84px; font-weight: 500; }
+.tr { flex: 1; height: 10px; background: rgba(var(--ink-rgb), .06) !important; border-radius: 9px; overflow: hidden; border: 1px solid var(--line); }
+.tr b { display: block; height: 100%; background: linear-gradient(90deg, #8b5cf6, #ec4899) !important; border-radius: 9px; }
+.bars .r:nth-child(3) .tr b { background: linear-gradient(90deg, #06b6d4, #3b82f6) !important; }
+.bars .r:nth-child(4) .tr b { background: linear-gradient(90deg, #f59e0b, #ef4444) !important; }
+.bars .r:nth-child(5) .tr b { background: linear-gradient(90deg, #10b981, #06b6d4) !important; }
+.bars .p { width: 40px; text-align: right; font-weight: 600; }
+
+/* Tables */
+.tw { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 440px; }
+th { text-align: left; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--line); }
+td { padding: 11px 10px; border-bottom: 1px solid var(--line); color: var(--ink); }
+tr:last-child td { border: 0; }
+tbody tr:hover { background: var(--soft); }
+
+.st { display: inline-flex; align-items: center; gap: 7px; font-weight: 500; }
+.st i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+/* Opportunities */
+.opp {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  transition: .15s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.opp:hover {
+  background: linear-gradient(135deg, #7c3aed, #ec4899) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+
+.opp:hover p { color: rgba(255,255,255,.85) !important; }
+
+.da {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+  color: #fff !important;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  flex: none;
+}
+
+.opp:nth-child(3) .da { background: linear-gradient(135deg, #06b6d4, #3b82f6) !important; }
+.opp:nth-child(4) .da { background: linear-gradient(135deg, #f59e0b, #ef4444) !important; }
+
+.opp:hover .da {
+  background: #fff !important;
+  color: #7c3aed !important;
+}
+
+.opp div:nth-child(2) { flex: 1; min-width: 0; }
+.opp p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* Technical Crawlability */
+.sev {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.sev div {
+  background: transparent !important;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.sev b {
+  display: block;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+}
+
+.sev div:nth-child(1) b { color: #ef4444 !important; }
+.sev div:nth-child(2) b { color: #f59e0b !important; }
+.sev div:nth-child(3) b { color: #10b981 !important; }
+
+.sev span { font-size: 12px; color: var(--muted); }
+
+.code {
+  margin-top: 14px;
+  background: #0a0a0a;
+  color: #d4d4d4;
+  border: 1px solid #262626;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 12px;
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.7;
+}
+
+.code em { font-style: normal; color: #86efac; }
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 28px 0 44px;
+}
+
+@media(max-width: 1000px) {
+  .hero { grid-template-columns: 1fr; }
+  .score { justify-content: flex-start; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .c2, .c11 { grid-template-columns: 1fr; }
+  h1 { font-size: 36px; }
+  .gw { display: none; }
+}
+
+@media(max-width: 600px) {
+  .wrap { padding: 0 16px; }
+  .kpis { grid-template-columns: 1fr; }
+  .top { gap: 14px; }
+  .heat { grid-template-columns: 60px repeat(6, 1fr); }
+}
+</style>
+<div id="page-overview" class="app-page-view" style="display:block">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" class="on" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>Live telemetry · AEO · SEO · GEO engine</div>
+            <h1>Visibility<br>Overview</h1>
+            <p class="lead">Track organic search performance, AI answer presence and citation opportunities in one place.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=overview&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=overview&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=overview&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=overview&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=overview&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=overview&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=overview&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=overview&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=overview&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=overview&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=overview&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=overview&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=overview&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        <div class="score">
+          <div class="ring" id="vis-ring-container">
+            <img id="vis-ring-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNzAgMTcwIiB3aWR0aD0iMTcwIiBoZWlnaHQ9IjE3MCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNjb3JlUmluZ0dyYWQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMTQwIiB5MT0iMjAiIHgyPSIyMCIgeTI9IjE0MCI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNlYzQ4OTkiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIzNSUiIHN0b3AtY29sb3I9IiNjMDg0ZmMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI3MCUiIHN0b3AtY29sb3I9IiM2MzY2ZjEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDZiNmQ0Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8Y2lyY2xlIGN4PSI4NSIgY3k9Ijg1IiByPSI3MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjYyNzJlIiBzdHJva2Utd2lkdGg9IjExIi8+CiAgPGNpcmNsZSBjeD0iODUiIGN5PSI4NSIgcj0iNzIiIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNzY29yZVJpbmdHcmFkKSIgc3Ryb2tlLXdpZHRoPSIxMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtZGFzaGFycmF5PSIzOTMuNiA0NTIuNCIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDg1IDg1KSIvPgo8L3N2Zz4=" width="170" height="170" style="position:absolute;inset:0;width:170px;height:170px;display:block;" alt="Score Ring">
+            <div class="ring-content">
+              <div class="ring-score" id="vis-ring-score-val">87</div>
+              <div class="ring-label">VISIBILITY SCORE</div>
+            </div>
+          </div>
+          <div class="mini">
+            <div>Avg rank<b id="vis-mini-rank">#2.0</b></div>
+            <div>Direct links<b id="vis-mini-links">1</b></div>
+            <div>Evaluations<b id="vis-mini-evals">2</b></div>
+          </div>
+        </div>
+        
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      
+    <div class="kpis">
+      <div class="card kpi dark">
+        <div class="l">SEO Top-10 <span class="pill">▲ 12%</span></div>
+        <div class="v" id="kpi-val-seo">100.0%</div>
+        <div class="d" id="kpi-desc-seo">Avg rank #2.0</div>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAyMDAgMzAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgogIDxwb2x5bGluZSBwb2ludHM9IjAsMjQgMzAsMjAgNjAsMjIgOTUsMTIgMTMwLDE0IDE2NSw1IDIwMCw0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+" style="width:100%;height:32px;display:block;margin-top:10px;" alt="SEO Top-10 sparkline">
+      </div>
+      <div class="card kpi">
+        <div class="l">AI Mention Rate <span class="pill">+1</span></div>
+        <div class="v" id="kpi-val-mention">100.0%</div>
+        <div class="d">1 new sighting</div>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAyMDAgMzAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgogIDxwb2x5bGluZSBwb2ludHM9IjAsMjYgMzAsMjQgNjAsMTggOTUsMTkgMTMwLDEwIDE2NSw4IDIwMCw0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmNTllMGIiIHN0cm9rZS13aWR0aD0iMi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+" style="width:100%;height:32px;display:block;margin-top:10px;" alt="AI Mention sparkline">
+      </div>
+      <div class="card kpi">
+        <div class="l">AI Citation Rate <span class="pill">Live</span></div>
+        <div class="v" id="kpi-val-cite">100.0%</div>
+        <div class="d" id="kpi-desc-cite">1 direct link</div>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAyMDAgMzAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgogIDxwb2x5bGluZSBwb2ludHM9IjAsMjAgMzAsMjIgNjAsMTQgOTUsMTYgMTMwLDkgMTY1LDEwIDIwMCw1IiBmaWxsPSJub25lIiBzdHJva2U9IiMxMGI5ODEiIHN0cm9rZS13aWR0aD0iMi4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+" style="width:100%;height:32px;display:block;margin-top:10px;" alt="AI Citation sparkline">
+      </div>
+      <div class="card kpi">
+        <div class="l">Questions Tracked <span class="pill" id="kpi-pill-evals">2 evals</span></div>
+        <div class="v" id="kpi-val-questions">50</div>
+        <div class="d">Across 3 markets</div>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAyMDAgMzAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgogIDxwb2x5bGluZSBwb2ludHM9IjAsMjUgMzAsMjUgNjAsMjAgOTUsMjAgMTMwLDE0IDE2NSwxMiAyMDAsNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDZiNmQ0IiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==" style="width:100%;height:32px;display:block;margin-top:10px;" alt="Questions sparkline">
+      </div>
+    </div>
+    
+
+      <div class="g c2">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+            <h3 style="margin:0;display:block;">Visibility trend <small id="trend-chart-sub" style="display:block;margin-top:4px;color:#a3a3a3;font-size:12px;font-weight:400;">Score vs. evaluations · 30d</small></h3>
+            <span style="background:rgba(34,197,94,0.12);color:#22c55e;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap;">▲ +14% MoM</span>
+          </div>
+          <div id="trend-chart-box" style="position:relative;width:100%;height:220px;overflow:hidden;">
+            <img id="trend-chart-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgMjIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIyMjAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJmYWRlIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM4YjVjZjYiIHN0b3Atb3BhY2l0eT0iMC4zMiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM4YjVjZjYiIHN0b3Atb3BhY2l0eT0iMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPCEtLSBHcmlkIExpbmVzIC0tPgogIDxsaW5lIHgxPSIzNiIgeDI9IjYzMCIgeTE9IjIwIiB5Mj0iMjAiIHN0cm9rZT0iIzI2MjYyNiIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPGxpbmUgeDE9IjM2IiB4Mj0iNjMwIiB5MT0iNzAiIHkyPSI3MCIgc3Ryb2tlPSIjMjYyNjI2IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMzYiIHgyPSI2MzAiIHkxPSIxMjAiIHkyPSIxMjAiIHN0cm9rZT0iIzI2MjYyNiIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPGxpbmUgeDE9IjM2IiB4Mj0iNjMwIiB5MT0iMTcwIiB5Mj0iMTcwIiBzdHJva2U9IiMyNjI2MjYiIHN0cm9rZS13aWR0aD0iMSIvPgogIDwhLS0gWSBBeGlzIExhYmVscyAtLT4KICA8dGV4dCB4PSI0IiB5PSIyNCIgZmlsbD0iI2EzYTNhMyIgZm9udC1zaXplPSIxMSIgZm9udC1mYW1pbHk9IkludGVyLCAtYXBwbGUtc3lzdGVtLCBzYW5zLXNlcmlmIj4xMDA8L3RleHQ+CiAgPHRleHQgeD0iMTAiIHk9Ijc0IiBmaWxsPSIjYTNhM2EzIiBmb250LXNpemU9IjExIiBmb250LWZhbWlseT0iSW50ZXIsIC1hcHBsZS1zeXN0ZW0sIHNhbnMtc2VyaWYiPjc1PC90ZXh0PgogIDx0ZXh0IHg9IjEwIiB5PSIxMjQiIGZpbGw9IiNhM2EzYTMiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtZmFtaWx5PSJJbnRlciwgLWFwcGxlLXN5c3RlbSwgc2Fucy1zZXJpZiI+NTA8L3RleHQ+CiAgPHRleHQgeD0iMTAiIHk9IjE3NCIgZmlsbD0iI2EzYTNhMyIgZm9udC1zaXplPSIxMSIgZm9udC1mYW1pbHk9IkludGVyLCAtYXBwbGUtc3lzdGVtLCBzYW5zLXNlcmlmIj4yNTwvdGV4dD4KICA8IS0tIFNoYWRlZCBBcmVhIEZpbGwgLS0+CiAgPHBhdGggZmlsbD0idXJsKCNmYWRlKSIgZD0iTTM2LDE0Ny41IEwxMjAsMTI5LjUgTDIwNSwxMTkuNSBMMjkwLDk3LjUgTDM3NSw3OS41IEw0NjAsNjMuNSBMNjMwLDM5LjUgTDYzMCwxNzAgTDM2LDE3MFoiLz4KICA8IS0tIEN5YW4gRGFzaGVkIEV2YWx1YXRpb25zIExpbmUgLS0+CiAgPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzA2YjZkNCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1kYXNoYXJyYXk9IjQgNCIgcG9pbnRzPSIzNiwxNjIgMTIwLDE1NiAyMDUsMTQ4IDI5MCwxMzQgMzc1LDEyMiA0NjAsMTEwIDU0NSw5OCA2MzAsODQiLz4KICA8IS0tIFB1cnBsZSBTb2xpZCBWaXNpYmlsaXR5IFNjb3JlIExpbmUgLS0+CiAgPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzhiNWNmNiIgc3Ryb2tlLXdpZHRoPSIyLjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgcG9pbnRzPSIzNiwxNDcuNSAxMjAsMTI5LjUgMjA1LDExOS41IDI5MCw5Ny41IDM3NSw3OS41IDQ2MCw2My41IDYzMCwzOS41Ii8+CiAgPCEtLSBHbG93aW5nIFRhcmdldCBNYXJrZXIgYXQgV2sgNCAoUGVhayA4NykgLS0+CiAgPGNpcmNsZSBjeD0iNjMwIiBjeT0iMzkuNSIgcj0iMTEiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMjgiLz4KICA8Y2lyY2xlIGN4PSI2MzAiIGN5PSIzOS41IiByPSI1IiBmaWxsPSIjZmZmZmZmIi8+CiAgPCEtLSBYIEF4aXMgTGFiZWxzIC0tPgogIDx0ZXh0IHg9IjM2IiB5PSIyMDAiIGZpbGw9IiNhM2EzYTMiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtZmFtaWx5PSJJbnRlciwgLWFwcGxlLXN5c3RlbSwgc2Fucy1zZXJpZiI+V2sgMTwvdGV4dD4KICA8dGV4dCB4PSIyMjUiIHk9IjIwMCIgZmlsbD0iI2EzYTNhMyIgZm9udC1zaXplPSIxMSIgZm9udC1mYW1pbHk9IkludGVyLCAtYXBwbGUtc3lzdGVtLCBzYW5zLXNlcmlmIj5XayAyPC90ZXh0PgogIDx0ZXh0IHg9IjQxMCIgeT0iMjAwIiBmaWxsPSIjYTNhM2EzIiBmb250LXNpemU9IjExIiBmb250LWZhbWlseT0iSW50ZXIsIC1hcHBsZS1zeXN0ZW0sIHNhbnMtc2VyaWYiPldrIDM8L3RleHQ+CiAgPHRleHQgeD0iNTkwIiB5PSIyMDAiIGZpbGw9IiNhM2EzYTMiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtZmFtaWx5PSJJbnRlciwgLWFwcGxlLXN5c3RlbSwgc2Fucy1zZXJpZiI+V2sgNDwvdGV4dD4KPC9zdmc+" style="width:100%;height:220px;display:block;object-fit:fill;" alt="Visibility trend telemetry chart">
+          </div>
+          <div class="leg">
+            <span><i style="background:#8b5cf6;"></i>Visibility score</span>
+            <span><i class="d" style="background:repeating-linear-gradient(90deg,#06b6d4 0 4px,transparent 4px 7px);"></i>Evaluations</span>
+          </div>
+        </div>
+
+        <div class="card bars">
+          <h3>AI assistants <small>Mention rate</small></h3>
+          <div class="r"><span class="n">Perplexity</span><div class="tr"><b style="width:94%"></b></div><span class="p">94%</span></div>
+          <div class="r"><span class="n">ChatGPT</span><div class="tr"><b style="width:82%"></b></div><span class="p">82%</span></div>
+          <div class="r"><span class="n">Claude</span><div class="tr"><b style="width:68%"></b></div><span class="p">68%</span></div>
+          <div class="r"><span class="n">Gemini</span><div class="tr"><b style="width:55%"></b></div><span class="p">55%</span></div>
+        </div>
+      </div>
+
+      <div class="g">
+        <div class="card">
+          <h3>Coverage heatmap <small>Assistant × topic cluster</small></h3>
+          <div class="heat"><div></div><div class="h">Pricing</div><div class="h">How-to</div><div class="h">Compare</div><div class="h">Reviews</div><div class="h">Local</div><div class="h">Brand</div><div>ChatGPT</div><div class="c" style="background: hsla(160, 85%, 55%, 0.8); color: #fff">80</div><div class="c" style="background: hsla(145, 85%, 55%, 0.88); color: #fff">90</div><div class="c" style="background: hsla(190, 85%, 55%, 0.65); color: #fff">60</div><div class="c" style="background: hsla(175, 85%, 55%, 0.72); color: #fff">70</div><div class="c" style="background: hsla(220, 85%, 55%, 0.5); color: var(--ink)">40</div><div class="c" style="background: hsla(138, 85%, 55%, 0.91); color: #fff">95</div><div>Perplexity</div><div class="c" style="background: hsla(138, 85%, 55%, 0.91); color: #fff">95</div><div class="c" style="background: hsla(152, 85%, 55%, 0.84); color: #fff">85</div><div class="c" style="background: hsla(145, 85%, 55%, 0.88); color: #fff">90</div><div class="c" style="background: hsla(168, 85%, 55%, 0.76); color: #fff">75</div><div class="c" style="background: hsla(190, 85%, 55%, 0.65); color: #fff">60</div><div class="c" style="background: hsla(133, 85%, 55%, 0.94); color: #fff">98</div><div>Claude</div><div class="c" style="background: hsla(175, 85%, 55%, 0.72); color: #fff">70</div><div class="c" style="background: hsla(160, 85%, 55%, 0.8); color: #fff">80</div><div class="c" style="background: hsla(198, 85%, 55%, 0.61); color: #fff">55</div><div class="c" style="background: hsla(190, 85%, 55%, 0.65); color: #fff">60</div><div class="c" style="background: hsla(228, 85%, 55%, 0.46); color: var(--ink)">35</div><div class="c" style="background: hsla(145, 85%, 55%, 0.88); color: #fff">90</div><div>Gemini</div><div class="c" style="background: hsla(205, 85%, 55%, 0.57); color: #fff">50</div><div class="c" style="background: hsla(182, 85%, 55%, 0.69); color: #fff">65</div><div class="c" style="background: hsla(212, 85%, 55%, 0.54); color: var(--ink)">45</div><div class="c" style="background: hsla(198, 85%, 55%, 0.61); color: #fff">55</div><div class="c" style="background: hsla(235, 85%, 55%, 0.42); color: var(--ink)">30</div><div class="c" style="background: hsla(160, 85%, 55%, 0.8); color: #fff">80</div></div>
+        </div>
+      </div>
+
+      <div class="g c11">
+        <div class="card">
+          <h3>Competitor visibility <small>Share of AI answers</small></h3>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr><th>Entity</th><th>Sightings</th><th>Threat</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>rival-one.com</td><td class="mono">14</td><td><span class="st"><i style="background:var(--bad)"></i>High</span></td></tr>
+                <tr><td>growthlab.io</td><td class="mono">9</td><td><span class="st"><i style="background:var(--warn)"></i>Medium</span></td></tr>
+                <tr><td>seotools.dev</td><td class="mono">4</td><td><span class="st"><i style="background:var(--ok)"></i>Low</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Technical crawlability <small>Latest audit</small></h3>
+          <div class="sev">
+            <div><b>2</b><span>Critical</span></div>
+            <div><b>5</b><span>High</span></div>
+            <div><b>12</b><span>Validated</span></div>
+          </div>
+          <div class="code mono">&lt;meta name="robots" content="<em>index, follow</em>"&gt;
+User-agent: GPTBot
+<em>Allow: /</em></div>
+        </div>
+      </div>
+
+      <div class="g c11">
+        <div class="card">
+          <h3>Prioritized opportunities <small>High-DA citation gaps</small></h3>
+          <a class="opp" href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">
+            <div class="da">92</div>
+            <div><b>Industry Weekly</b><p>Competitor cited, you absent · pitch a data study</p></div>
+            <span>→</span>
+          </a>
+          <a class="opp" href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">
+            <div class="da">87</div>
+            <div><b>TechReview Hub</b><p>Comparison list inclusion · outreach angle ready</p></div>
+            <span>→</span>
+          </a>
+          <a class="opp" href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">
+            <div class="da">81</div>
+            <div><b>Marketer's Guide</b><p>AI answers cite this source for your topic</p></div>
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="card">
+          <h3>Pipeline activity <small>Last 4 runs</small></h3>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr><th>Run</th><th>Status</th><th>Qs</th><th>Duration</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="mono">run-0142</td><td><span class="st"><i style="background:var(--ok)"></i>Success</span></td><td>15</td><td class="mono">2m 14s</td></tr>
+                <tr><td class="mono">run-0141</td><td><span class="st"><i style="background:var(--ok)"></i>Success</span></td><td>15</td><td class="mono">2m 31s</td></tr>
+                <tr><td class="mono">run-0140</td><td><span class="st"><i style="background:var(--warn)"></i>Retried</span></td><td>14</td><td class="mono">3m 48s</td></tr>
+                <tr><td class="mono">run-0139</td><td><span class="st"><i style="background:var(--bad)"></i>Failed</span></td><td>0</td><td class="mono">0m 09s</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+<div id="page-seo_aeo" class="app-page-view" style="display:none">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" class="on" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>Search Engine & Answer Engine Optimization</div>
+            <h1>SEO & AEO<br>Analytics</h1>
+            <p class="lead">Deep search ranking positions, Google SERP answer boxes, featured snippets, and evidence provenance.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=seo_aeo&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=seo_aeo&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=seo_aeo&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=seo_aeo&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=seo_aeo&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=seo_aeo&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=seo_aeo&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=seo_aeo&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=seo_aeo&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=seo_aeo&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=seo_aeo&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=seo_aeo&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=seo_aeo&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      <div class="kpis">
+        <div class="card kpi dark"><div class="l">Top-10 Rank Rate <span class="pill">Podium</span></div><div class="v">100.0%</div><div class="d">Avg rank #2.0</div></div>
+        <div class="card kpi"><div class="l">Top-3 Rank Rate <span class="pill">Podium</span></div><div class="v">50.0%</div><div class="d">1 podium query</div></div>
+        <div class="card kpi"><div class="l">Answer Box Coverage <span class="pill">Snippet</span></div><div class="v">50.0%</div><div class="d">1 featured box</div></div>
+        <div class="card kpi"><div class="l">Evaluated Rankings <span class="pill">Total</span></div><div class="v">50</div><div class="d">Across tracked queries</div></div>
+      </div>
+
+      <div class="g">
+        <div class="card">
+          <h3>Search Ranking & Answer Feature Observations <small>Logged live records</small></h3>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr><th>Provenance</th><th>Provider</th><th>Market</th><th>Rank</th><th>Answer Box</th><th>Score</th><th>Measured At</th></tr>
+              </thead>
+              <tbody>
+                
+        <tr>
+          <td><span class="st"><i style="background:var(--ok)"></i>Real Live</span></td>
+          <td><b>PERPLEXITY</b></td>
+          <td class="mono">US</td>
+          <td class="mono"><b>Unranked</b></td>
+          <td>No</td>
+          <td class="mono">N/A</td>
+          <td>2026-10-25T11:16:08</td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--ok)"></i>Real Live</span></td>
+          <td><b>GOOGLE_SEARCH</b></td>
+          <td class="mono">US</td>
+          <td class="mono"><b>Unranked</b></td>
+          <td>No</td>
+          <td class="mono">0.0</td>
+          <td>2026-10-25T11:16:08</td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--ok)"></i>Real Live</span></td>
+          <td><b>PERPLEXITY</b></td>
+          <td class="mono">US</td>
+          <td class="mono"><b>Unranked</b></td>
+          <td>No</td>
+          <td class="mono">N/A</td>
+          <td>2026-10-25T11:16:05</td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--ok)"></i>Real Live</span></td>
+          <td><b>GOOGLE_SEARCH</b></td>
+          <td class="mono">US</td>
+          <td class="mono"><b>Unranked</b></td>
+          <td>No</td>
+          <td class="mono">0.0</td>
+          <td>2026-10-25T11:16:05</td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--ok)"></i>Real Live</span></td>
+          <td><b>PERPLEXITY</b></td>
+          <td class="mono">US</td>
+          <td class="mono"><b>Unranked</b></td>
+          <td>No</td>
+          <td class="mono">N/A</td>
+          <td>2026-10-25T11:16:02</td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--ok)"></i>Real Live</span></td>
+          <td><b>GOOGLE_SEARCH</b></td>
+          <td class="mono">US</td>
+          <td class="mono"><b>#2</b></td>
+          <td>No</td>
+          <td class="mono">80.0</td>
+          <td>2026-10-25T11:16:02</td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--ok)"></i>Real Live</span></td>
+          <td><b>PERPLEXITY</b></td>
+          <td class="mono">IN</td>
+          <td class="mono"><b>Unranked</b></td>
+          <td>No</td>
+          <td class="mono">N/A</td>
+          <td>2026-10-25T05:48:58</td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--ok)"></i>Real Live</span></td>
+          <td><b>GOOGLE_SEARCH</b></td>
+          <td class="mono">IN</td>
+          <td class="mono"><b>Unranked</b></td>
+          <td>No</td>
+          <td class="mono">0.0</td>
+          <td>2026-10-25T05:48:58</td>
+        </tr>
+        
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+<div id="page-geo" class="app-page-view" style="display:none">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" class="on" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>Generative Engine Optimization</div>
+            <h1>GEO<br>Intelligence</h1>
+            <p class="lead">Tracking brand mentions, direct citations, and competitor presence across ChatGPT, Claude, Perplexity & Gemini.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=geo&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=geo&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=geo&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=geo&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=geo&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=geo&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=geo&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=geo&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=geo&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=geo&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=geo&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=geo&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=geo&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      <div class="kpis">
+        <div class="card kpi dark"><div class="l">AI Mention Rate <span class="pill">Confirmed</span></div><div class="v">100.0%</div><div class="d">Affirmative sightings</div></div>
+        <div class="card kpi"><div class="l">AI Citation Rate <span class="pill">Hyperlink</span></div><div class="v">100.0%</div><div class="d">1 direct link</div></div>
+        <div class="card kpi"><div class="l">Evaluated Answers <span class="pill">Total</span></div><div class="v">2</div><div class="d">Across AI assistants</div></div>
+        <div class="card kpi"><div class="l">Competitors Encountered <span class="pill">Sighted</span></div><div class="v">8</div><div class="d">Descript, Runway, ToolX...</div></div>
+      </div>
+
+      <div class="g c11">
+        <div class="card bars">
+          <h3>Assistant Mention & Citation Rates <small>Generative engines</small></h3>
+          <div class="r"><span class="n">Perplexity</span><div class="tr"><b style="width:94%"></b></div><span class="p">94%</span></div>
+          <div class="r"><span class="n">ChatGPT</span><div class="tr"><b style="width:82%"></b></div><span class="p">82%</span></div>
+          <div class="r"><span class="n">Claude</span><div class="tr"><b style="width:68%"></b></div><span class="p">68%</span></div>
+          <div class="r"><span class="n">Gemini</span><div class="tr"><b style="width:55%"></b></div><span class="p">55%</span></div>
+        </div>
+
+        <div class="card">
+          <h3>Assistant Engine Readiness <small>Status matrix</small></h3>
+          <div class="tw">
+            <table>
+              <thead><tr><th>Assistant</th><th>Model</th><th>Web Access</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><b>PERPLEXITY</b></td><td class="mono">sonar-medium</td><td>Yes</td><td><span class="st"><i style="background:var(--ok)"></i>Ready</span></td></tr>
+                <tr><td><b>CHATGPT</b></td><td class="mono">gpt-4o</td><td>Yes</td><td><span class="st"><i style="background:var(--ok)"></i>Ready</span></td></tr>
+                <tr><td><b>CLAUDE</b></td><td class="mono">claude-3-5-sonnet</td><td>Yes</td><td><span class="st"><i style="background:var(--ok)"></i>Ready</span></td></tr>
+                <tr><td><b>GEMINI</b></td><td class="mono">gemini-1.5-pro</td><td>Yes</td><td><span class="st"><i style="background:var(--ok)"></i>Ready</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+<div id="page-questions" class="app-page-view" style="display:none">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" class="on" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>Query Catalog & Ingestion Engine</div>
+            <h1>Question<br>Explorer</h1>
+            <p class="lead">Audit, curate, and ingest creator queries with search intent classification and measurement history.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=questions&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=questions&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=questions&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=questions&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=questions&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=questions&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=questions&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=questions&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=questions&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=questions&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=questions&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=questions&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=questions&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      <div class="kpis">
+        <div class="card kpi dark"><div class="l">Tracked Queries <span class="pill">Catalog</span></div><div class="v">50</div><div class="d">Active creator topics</div></div>
+        <div class="card kpi"><div class="l">Approved Queries <span class="pill">Verified</span></div><div class="v">50</div><div class="d">Ready for live scans</div></div>
+        <div class="card kpi"><div class="l">Awaiting Curation <span class="pill">Review</span></div><div class="v">0</div><div class="d">Human editorial queue</div></div>
+        <div class="card kpi"><div class="l">Target Markets <span class="pill">Regions</span></div><div class="v">3</div><div class="d">US, UK, IN</div></div>
+      </div>
+
+      <div class="g">
+        <div class="card">
+          <h3>Ingest Creator Query <small>Direct submission & CSV export</small></h3>
+          <form method="GET" action="" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px">
+            <input type="hidden" name="page" value="questions">
+            <input type="hidden" name="action" value="add_question">
+            <input type="text" name="question_text" placeholder="Enter creator question (e.g. Best zero-fee tools for selling digital downloads?)" style="flex:1;min-width:280px;background:#0a0a0a;color:#fafafa;border:1px solid #2e2e2e;border-radius:99px;padding:8px 16px;font:13px Inter,sans-serif" required>
+            <select name="intent" style="background:#0a0a0a;color:#fafafa;border:1px solid #2e2e2e;border-radius:99px;padding:8px 14px;font:13px Inter,sans-serif">
+              <option value="informational">Informational</option>
+              <option value="commercial">Commercial</option>
+              <option value="transactional">Transactional</option>
+              <option value="navigational">Navigational</option>
+            </select>
+            <button type="submit" class="btn">Add Question</button>
+            <a href="http://127.0.0.1:8001/v1/questions/export.csv" class="btn" style="background:#262626;color:#fafafa" download target="_blank">Export CSV</a>
+          </form>
+        </div>
+      </div>
+
+      <div class="g">
+        <div class="card">
+          <h3>Creator Query Catalog <small>Curated workflow questions</small></h3>
+          <div class="tw">
+            <table>
+              <thead><tr><th>Question</th><th>Intent</th><th>Market</th><th>Status</th><th>Curation Action</th></tr></thead>
+              <tbody>
+        <tr>
+          <td><b>Can creators monetize automated video workflows with IncuBrix?</b></td>
+          <td class="mono">INFORMATIONAL</td>
+          <td class="mono">US</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=fd63e969-2350-49bd-8605-6a8c1999c84a" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=fd63e969-2350-49bd-8605-6a8c1999c84a" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>What are the best AI B-roll matching tools for creators in 2026?</b></td>
+          <td class="mono">COMMERCIAL</td>
+          <td class="mono">US</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=66dde129-8482-45d9-b2ec-f47f521507da" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=66dde129-8482-45d9-b2ec-f47f521507da" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>How do creators optimize visibility on ChatGPT search?</b></td>
+          <td class="mono">INFORMATIONAL</td>
+          <td class="mono">US</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=0e6d33c2-cf45-4d4c-8171-76623d79e517" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=0e6d33c2-cf45-4d4c-8171-76623d79e517" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>How can video creators automate b-roll selection using AI?</b></td>
+          <td class="mono">INFORMATIONAL</td>
+          <td class="mono">US</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=ea613d77-ba01-486f-94df-53cc45c05d0d" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=ea613d77-ba01-486f-94df-53cc45c05d0d" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>Best AI tools to automatically add b-roll to talking head videos</b></td>
+          <td class="mono">COMMERCIAL</td>
+          <td class="mono">US</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=97354aa6-2b1a-4cf9-b79b-8a9051d93e09" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=97354aa6-2b1a-4cf9-b79b-8a9051d93e09" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>How to turn podcast audio into video with automated visual b-roll</b></td>
+          <td class="mono">INFORMATIONAL</td>
+          <td class="mono">US</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=561bd3c9-1262-4848-ad7b-0241f5c03404" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=561bd3c9-1262-4848-ad7b-0241f5c03404" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>How does script-to-broll automation match stock footage to speech?</b></td>
+          <td class="mono">INFORMATIONAL</td>
+          <td class="mono">US</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=d22de34d-8915-4a9e-8da5-fdc70a5ae544" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=d22de34d-8915-4a9e-8da5-fdc70a5ae544" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>Can AI automatically detect video script pacing and insert stock clips</b></td>
+          <td class="mono">INFORMATIONAL</td>
+          <td class="mono">UK</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=d909afe3-9dfc-4a83-8b53-8d139e79055c" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=d909afe3-9dfc-4a83-8b53-8d139e79055c" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>What are the best free tools for automatic b-roll generation for YouTu</b></td>
+          <td class="mono">COMMERCIAL</td>
+          <td class="mono">IN</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=b523fb14-6f2b-4529-8bed-4ade77242440" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=b523fb14-6f2b-4529-8bed-4ade77242440" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><b>How to generate cinematic b-roll for faceless YouTube channels with AI</b></td>
+          <td class="mono">INFORMATIONAL</td>
+          <td class="mono">IN</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>APPROVED</span></td>
+          <td>
+            <a href="?page=questions&action=approve_q&id=b66882ee-df86-4825-b062-6792e3de180c" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Approve</a>
+            <a href="?page=questions&action=reject_q&id=b66882ee-df86-4825-b062-6792e3de180c" class="btn" style="padding:4px 12px;font-size:11px;background:#262626;color:#fafafa" target="_self">Reject</a>
+          </td>
+        </tr>
+        </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+<div id="page-audit" class="app-page-view" style="display:none">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" class="on" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>Crawlability & Entity Architecture</div>
+            <h1>Technical SEO<br>& AEO Audit</h1>
+            <p class="lead">Audit crawler accessibility, robots.txt AI permissions, Schema.org entity clarity, and generate actionable code patches.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=audit&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=audit&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=audit&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=audit&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=audit&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=audit&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=audit&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=audit&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=audit&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=audit&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=audit&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=audit&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=audit&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      <div class="kpis">
+        <div class="card kpi dark"><div class="l">Total Findings <span class="pill">Issues</span></div><div class="v">50</div><div class="d">Identified audit points</div></div>
+        <div class="card kpi"><div class="l">Critical Severity <span class="pill">Blocking</span></div><div class="v">2</div><div class="d">Urgent crawler remediations</div></div>
+        <div class="card kpi"><div class="l">High Priority <span class="pill">Ranking</span></div><div class="v">5</div><div class="d">Schema & metadata fixes</div></div>
+        <div class="card kpi"><div class="l">Validated Fixes <span class="pill">Verified</span></div><div class="v">12</div><div class="d">Independently verified</div></div>
+      </div>
+
+      <div class="g">
+        <div class="card">
+          <h3>Live Crawlability Inspection <small>Evaluate robots.txt, metadata, Schema.org</small></h3>
+          <form method="GET" action="" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px">
+            <input type="hidden" name="page" value="audit">
+            <input type="hidden" name="action" value="run_audit">
+            <input type="url" name="audit_url" placeholder="https://incubrix.com/features" value="https://incubrix.com" style="flex:1;min-width:280px;background:#0a0a0a;color:#fafafa;border:1px solid #2e2e2e;border-radius:99px;padding:8px 16px;font:13px Inter,sans-serif" required>
+            <button type="submit" class="btn">Audit URL</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="g">
+        <div class="card">
+          <h3>Prioritized Audit Remediations <small>Crawlability, AI bot directives & Schema.org</small></h3>
+          <div class="tw">
+            <table>
+              <thead><tr><th>Severity</th><th>Issue Code</th><th>Category</th><th>Description</th><th>Validation</th><th>Action</th></tr></thead>
+              <tbody>
+        <tr>
+          <td><span class="st"><i style="background:var(--muted)"></i>INFO</span></td>
+          <td class="mono"><b>OPTIONAL_LLMS_TXT_MISSING</b></td>
+          <td>llms_txt</td>
+          <td>Optional discovery file /llms.txt was not detected. Note: llms.tx...</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>UNVALIDATED</span></td>
+          <td><a href="?page=audit&action=validate_fix&id=ee75bb17-56be-45c2-96c2-466c4b900ab7" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Validate Fix</a></td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--muted)"></i>MEDIUM</span></td>
+          <td class="mono"><b>MISSING_SITEMAP</b></td>
+          <td>sitemap</td>
+          <td>XML sitemap was not provided or could not be retrieved....</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>UNVALIDATED</span></td>
+          <td><a href="?page=audit&action=validate_fix&id=a9ce7ad9-2faf-423b-9f95-c527c4abf604" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Validate Fix</a></td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--warn)"></i>HIGH</span></td>
+          <td class="mono"><b>MISSING_ROBOTS_TXT</b></td>
+          <td>robots_txt</td>
+          <td>No robots.txt file could be retrieved for the site....</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>UNVALIDATED</span></td>
+          <td><a href="?page=audit&action=validate_fix&id=58ffed3d-afa9-4677-9343-051036f7e13f" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Validate Fix</a></td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--warn)"></i>HIGH</span></td>
+          <td class="mono"><b>MISSING_STRUCTURED_DATA</b></td>
+          <td>structured_data</td>
+          <td>No Schema.org JSON-LD structured data detected on the page....</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>UNVALIDATED</span></td>
+          <td><a href="?page=audit&action=validate_fix&id=b79424d1-8479-49ca-bcb1-cee1e08d7bb9" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Validate Fix</a></td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--muted)"></i>INFO</span></td>
+          <td class="mono"><b>PERFORMANCE_LATENCY_UNAVAILABLE</b></td>
+          <td>performance</td>
+          <td>Response time was not measured or unavailable (e.g. offline fixtu...</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>UNVALIDATED</span></td>
+          <td><a href="?page=audit&action=validate_fix&id=b30fc411-3b9b-4d11-9a6e-0d7caffe5a68" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Validate Fix</a></td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--muted)"></i>MEDIUM</span></td>
+          <td class="mono"><b>MISSING_CANONICAL</b></td>
+          <td>canonical</td>
+          <td>Page does not declare a canonical URL (<link rel='canonical'>)....</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>UNVALIDATED</span></td>
+          <td><a href="?page=audit&action=validate_fix&id=a07b035c-bdf3-48e0-97bc-b5d4c13f968a" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Validate Fix</a></td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--warn)"></i>HIGH</span></td>
+          <td class="mono"><b>MISSING_H1</b></td>
+          <td>headings</td>
+          <td>Page is missing a primary <h1> heading tag....</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>UNVALIDATED</span></td>
+          <td><a href="?page=audit&action=validate_fix&id=43f05413-3ef9-4f60-a173-d994aa990a1c" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Validate Fix</a></td>
+        </tr>
+        
+        <tr>
+          <td><span class="st"><i style="background:var(--muted)"></i>MEDIUM</span></td>
+          <td class="mono"><b>MISSING_META_DESCRIPTION</b></td>
+          <td>metadata</td>
+          <td>Page is missing a <meta name='description'> tag....</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>UNVALIDATED</span></td>
+          <td><a href="?page=audit&action=validate_fix&id=bfffa462-2096-4748-9dfb-161d40e54166" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Validate Fix</a></td>
+        </tr>
+        </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+<div id="page-content" class="app-page-view" style="display:none">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" class="on" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>AEO Direct-Answer Publishing Engine</div>
+            <h1>Content<br>Studio</h1>
+            <p class="lead">Generate, review, and curate publish-ready AEO page drafts with opening direct answers, internal links, and Schema.org markup.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=content&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=content&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=content&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=content&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=content&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=content&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=content&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=content&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=content&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=content&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=content&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=content&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=content&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      <div class="kpis">
+        <div class="card kpi dark"><div class="l">Publish-Ready Pages <span class="pill">AEO Drafts</span></div><div class="v">10</div><div class="d">Full publish-ready articles</div></div>
+        <div class="card kpi"><div class="l">Direct Answer Compliance <span class="pill">First 2 Sentences</span></div><div class="v">100.0%</div><div class="d">Guaranteed concise answers</div></div>
+        <div class="card kpi"><div class="l">Sourced Citations <span class="pill">Real Citations</span></div><div class="v">30</div><div class="d">Verified third-party links</div></div>
+        <div class="card kpi"><div class="l">Schema.org Structured Data <span class="pill">JSON-LD</span></div><div class="v">10</div><div class="d">FAQPage & Article schema</div></div>
+      </div>
+
+      <div style="margin-bottom:14px;display:flex;justify-content:flex-end">
+        <a href="?page=content&action=generate_batch" class="btn" target="_self">⚡ Batch Generate 10 Drafts</a>
+      </div>
+
+      <div class="g">
+        
+        <div class="card" style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <h3 style="margin:0">Structuring FAQ Blocks for AI Search Retrieval | IncuBrix</h3>
+            <span class="pill">UNREVIEWED</span>
+          </div>
+          <p style="color:var(--muted);font-size:12px;margin-bottom:12px">Slug: /best-practices-for-structuring-faq-blocks-for-ai-search · Word count: 560 words</p>
+          <div style="background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px">
+            <span style="font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:.08em;font-weight:600">Opening Direct Answer (Guaranteed First 2 Sentences)</span>
+            <p style="margin-top:4px;font-size:13px;color:#fafafa"><b>> **Quick Answer**: The best practice for structuring FAQ blocks for AI search retrieval is to phrase headings as explicit, complete questions and deliver direct, self-contained answers within the first two sentences. Backing these sections with valid Schema.org FAQPage JSON-LD markup ensures search crawlers and AI assistants can extract unambiguous answers without semantic confusion.</b></p>
+          </div>
+          <div style="display:flex;gap:10px">
+            <a href="?page=content&action=approve_draft&id=4f066dcd-8009-4f72-89f8-175125575084" class="btn" style="padding:6px 16px;font-size:12px" target="_self">Approve for Publishing</a>
+          </div>
+        </div>
+        
+        <div class="card" style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <h3 style="margin:0">How Robots.txt Impacts AI Crawlers (GPTBot, ClaudeBot) | IncuBrix</h3>
+            <span class="pill">UNREVIEWED</span>
+          </div>
+          <p style="color:var(--muted);font-size:12px;margin-bottom:12px">Slug: /how-robots-txt-impacts-ai-crawlers-gptbot-claudebot · Word count: 545 words</p>
+          <div style="background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px">
+            <span style="font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:.08em;font-weight:600">Opening Direct Answer (Guaranteed First 2 Sentences)</span>
+            <p style="margin-top:4px;font-size:13px;color:#fafafa"><b>> **Quick Answer**: Robots.txt directives dictate whether AI assistant crawlers like GPTBot, ClaudeBot, and PerplexityBot can access and index your website for live answer generation. Disallowing these specific user-agents prevents AI engines from accessing your pages during retrieval-augmented generation, directly reducing your brand's citation visibility in generative search results.</b></p>
+          </div>
+          <div style="display:flex;gap:10px">
+            <a href="?page=content&action=approve_draft&id=e842429e-8a0c-4006-9f26-11ec2e7d2f07" class="btn" style="padding:6px 16px;font-size:12px" target="_self">Approve for Publishing</a>
+          </div>
+        </div>
+        
+        <div class="card" style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <h3 style="margin:0">Bridging Competitive Citation Gaps on Authority Blogs | IncuBrix</h3>
+            <span class="pill">UNREVIEWED</span>
+          </div>
+          <p style="color:var(--muted);font-size:12px;margin-bottom:12px">Slug: /how-to-identify-and-bridge-competitive-citation-gaps · Word count: 553 words</p>
+          <div style="background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px">
+            <span style="font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:.08em;font-weight:600">Opening Direct Answer (Guaranteed First 2 Sentences)</span>
+            <p style="margin-top:4px;font-size:13px;color:#fafafa"><b>> **Quick Answer**: To bridge competitive citation gaps, systematically analyze the third-party domains cited in AI answer engines for your target queries where competitors appear but your brand does not. Once identified, execute targeted editorial outreach offering differentiated data, technical case studies, or tool inclusion to secure authoritative co-citations.</b></p>
+          </div>
+          <div style="display:flex;gap:10px">
+            <a href="?page=content&action=approve_draft&id=40bfef02-c77b-4fdb-b312-1ea80bab21b9" class="btn" style="padding:6px 16px;font-size:12px" target="_self">Approve for Publishing</a>
+          </div>
+        </div>
+        
+        <div class="card" style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <h3 style="margin:0">Why Schema.org Data is Essential for AEO | IncuBrix</h3>
+            <span class="pill">UNREVIEWED</span>
+          </div>
+          <p style="color:var(--muted);font-size:12px;margin-bottom:12px">Slug: /why-schema-org-structured-data-is-essential-for-aeo · Word count: 550 words</p>
+          <div style="background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px">
+            <span style="font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:.08em;font-weight:600">Opening Direct Answer (Guaranteed First 2 Sentences)</span>
+            <p style="margin-top:4px;font-size:13px;color:#fafafa"><b>> **Quick Answer**: Schema.org structured data is essential for Answer Engine Optimization because it provides explicit machine-readable entity disambiguation that LLMs and search crawlers rely on to verify facts. By wrapping content in JSON-LD types like TechArticle, FAQPage, and HowTo, publishers eliminate ambiguity and dramatically increase their likelihood of being cited as authoritative sources.</b></p>
+          </div>
+          <div style="display:flex;gap:10px">
+            <a href="?page=content&action=approve_draft&id=7a98ad3f-adf8-41f6-b9f8-6a98f8d55b46" class="btn" style="padding:6px 16px;font-size:12px" target="_self">Approve for Publishing</a>
+          </div>
+        </div>
+        
+      </div>
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+<div id="page-citations" class="app-page-view" style="display:none">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" class="on" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>Third-Party Authority Strategy</div>
+            <h1>Citation<br>Explorer</h1>
+            <p class="lead">High-impact third-party citation opportunities, competitor mention gaps, and legitimate outreach angles.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=citations&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=citations&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=citations&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=citations&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=citations&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=citations&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=citations&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=citations&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=citations&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=citations&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=citations&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=citations&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=citations&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      <div class="kpis">
+        <div class="card kpi dark"><div class="l">Citation Opportunities <span class="pill">30 Targets</span></div><div class="v">30</div><div class="d">Verified authority outlets</div></div>
+        <div class="card kpi"><div class="l">Average Domain Authority <span class="pill">High DA</span></div><div class="v">DA 82</div><div class="d">High authority publications</div></div>
+        <div class="card kpi"><div class="l">Competitor Gaps <span class="pill">Unlinked</span></div><div class="v">18</div><div class="d">Competitor cited, you absent</div></div>
+        <div class="card kpi"><div class="l">Outreach Angles Ready <span class="pill">Legitimate</span></div><div class="v">30</div><div class="d">Tailored pitch angles</div></div>
+      </div>
+
+      <div class="g c11">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h3 style="margin:0">30-Target Opportunity Matrix <small>High-DA Authority Hubs</small></h3>
+            <a href="?page=citations&action=seed_citations" class="btn" style="padding:4px 12px;font-size:11px" target="_self">Seed 30 Targets</a>
+          </div>
+          
+        <div class="opp">
+          <div class="da">85</div>
+          <div>
+            <b>sg.linkedin.com</b>
+            <p>None</p>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">AUTHORITY_PUBLISHER →</span>
+        </div>
+        
+        <div class="opp">
+          <div class="da">85</div>
+          <div>
+            <b>opus.pro</b>
+            <p>None</p>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">AUTHORITY_PUBLISHER →</span>
+        </div>
+        
+        <div class="opp">
+          <div class="da">85</div>
+          <div>
+            <b>instagram.com</b>
+            <p>None</p>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">AUTHORITY_PUBLISHER →</span>
+        </div>
+        
+        <div class="opp">
+          <div class="da">85</div>
+          <div>
+            <b>earngenix.com</b>
+            <p>None</p>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">AUTHORITY_PUBLISHER →</span>
+        </div>
+        
+        <div class="opp">
+          <div class="da">85</div>
+          <div>
+            <b>1min.ai</b>
+            <p>None</p>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">AUTHORITY_PUBLISHER →</span>
+        </div>
+        
+        <div class="opp">
+          <div class="da">85</div>
+          <div>
+            <b>jupitrr.com</b>
+            <p>None</p>
+          </div>
+          <span style="font-size:12px;color:var(--muted)">AUTHORITY_PUBLISHER →</span>
+        </div>
+        
+        </div>
+        <div class="card">
+          <h3>Citation Strategy Guide <small>Best practices</small></h3>
+          <p style="color:var(--muted);margin-bottom:12px">Acquiring citations in publications cited by ChatGPT and Perplexity creates enduring generative visibility.</p>
+          <div class="code mono">Target: Industry Weekly (DA 92)
+Gap: Competitor cited in digital downloads guide
+Pitch: Provide Vk Analysis 2026 Creator Revenue Benchmark Data</div>
+          <div style="margin-top:16px">
+            <a href="http://127.0.0.1:8001/v1/reports/export/citation_targets.csv" class="btn" download target="_blank">Export citation_targets.csv</a>
+          </div>
+        </div>
+      </div>
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+<div id="page-scans" class="app-page-view" style="display:none">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" class="on" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>Orchestration & Telemetry</div>
+            <h1>Scan History<br>& Pipeline Runs</h1>
+            <p class="lead">Orchestrate end-to-end visibility pipelines, inspect job durations, bounded retries, and API cost telemetry.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=scans&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=scans&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=scans&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=scans&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=scans&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=scans&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=scans&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=scans&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=scans&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=scans&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=scans&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=scans&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=scans&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      <div class="kpis">
+        <div class="card kpi dark"><div class="l">Total Executions <span class="pill">Runs</span></div><div class="v">20</div><div class="d">Historical pipeline runs</div></div>
+        <div class="card kpi"><div class="l">Success Rate <span class="pill">Reliability</span></div><div class="v">96.5%</div><div class="d">Bounded retries applied</div></div>
+        <div class="card kpi"><div class="l">Average Duration <span class="pill">Telemetry</span></div><div class="v">2m 14s</div><div class="d">Across full harvest cycles</div></div>
+        <div class="card kpi"><div class="l">Unit API Rate Card <span class="pill">Perplexity</span></div><div class="v">$0.005</div><div class="d">Per 1,000 queries</div></div>
+      </div>
+
+      <div class="g">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h3 style="margin:0">Automated Pipeline Execution Log <small>Historical measurement runs</small></h3>
+            <a href="?page=scans&action=run_scan" class="btn" style="padding:4px 12px;font-size:11px" target="_self">▶ Run Scan</a>
+          </div>
+          <div class="tw">
+            <table>
+              <thead><tr><th>Run ID</th><th>Mode</th><th>Status</th><th>Questions</th><th>Duration</th><th>Timestamp</th></tr></thead>
+              <tbody>
+        <tr>
+          <td class="mono"><b>9da6f1a9</b></td>
+          <td class="mono">PIPELINE_COMPLETE</td>
+          <td><span class="st"><i style="background:var(--bad)"></i>FAILED</span></td>
+          <td class="mono">15</td>
+          <td class="mono">120.0s</td>
+          <td>2026-10-25T11:21:50</td>
+        </tr>
+        
+        <tr>
+          <td class="mono"><b>5b9fa1cc</b></td>
+          <td class="mono">PIPELINE_REFRESH</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>COMPLETED</span></td>
+          <td class="mono">100</td>
+          <td class="mono">120.0s</td>
+          <td>2026-10-25T11:21:49</td>
+        </tr>
+        
+        <tr>
+          <td class="mono"><b>f8e99c80</b></td>
+          <td class="mono">PIPELINE_COMPLETE</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>COMPLETED</span></td>
+          <td class="mono">100</td>
+          <td class="mono">120.0s</td>
+          <td>2026-10-25T11:21:48</td>
+        </tr>
+        
+        <tr>
+          <td class="mono"><b>7961e42d</b></td>
+          <td class="mono">PIPELINE_COMPLETE</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>COMPLETED</span></td>
+          <td class="mono">3</td>
+          <td class="mono">120.0s</td>
+          <td>2026-10-25T11:21:02</td>
+        </tr>
+        
+        <tr>
+          <td class="mono"><b>b5a62eb1</b></td>
+          <td class="mono">PIPELINE_COMPLETE</td>
+          <td><span class="st"><i style="background:var(--bad)"></i>FAILED</span></td>
+          <td class="mono">15</td>
+          <td class="mono">120.0s</td>
+          <td>2026-10-25T11:20:36</td>
+        </tr>
+        
+        <tr>
+          <td class="mono"><b>16e0ea77</b></td>
+          <td class="mono">PIPELINE_COMPLETE</td>
+          <td><span class="st"><i style="background:var(--warn)"></i>RUNNING</span></td>
+          <td class="mono">15</td>
+          <td class="mono">120.0s</td>
+          <td>2026-10-25T11:16:00</td>
+        </tr>
+        
+        <tr>
+          <td class="mono"><b>5fe9a3f9</b></td>
+          <td class="mono">PIPELINE_COMPLETE</td>
+          <td><span class="st"><i style="background:var(--bad)"></i>FAILED</span></td>
+          <td class="mono">15</td>
+          <td class="mono">120.0s</td>
+          <td>2026-10-25T08:45:39</td>
+        </tr>
+        
+        <tr>
+          <td class="mono"><b>b57da172</b></td>
+          <td class="mono">PIPELINE_REFRESH</td>
+          <td><span class="st"><i style="background:var(--ok)"></i>COMPLETED</span></td>
+          <td class="mono">100</td>
+          <td class="mono">120.0s</td>
+          <td>2026-10-25T08:45:38</td>
+        </tr>
+        </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+<div id="page-settings" class="app-page-view" style="display:none">
+
+    <div class="band">
+      <div class="bg" aria-hidden="true">
+        <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+        <svg viewBox="0 0 900 520" preserveAspectRatio="xMaxYMid slice">
+          <g>
+            <circle class="rg" cx="640" cy="200" r="90"/>
+            <circle class="rg" cx="640" cy="200" r="160"/>
+            <circle class="rg" cx="640" cy="200" r="240"/>
+            <circle class="rg" cx="640" cy="200" r="330"/>
+            <circle class="rg" cx="640" cy="200" r="430"/>
+          </g>
+          <path class="rg" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="fl" d="M0,420 C200,300 320,480 520,340 S800,260 900,320"/>
+          <path class="rg" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <path class="fl b" d="M0,470 C220,380 360,520 560,400 S820,330 900,380"/>
+          <g fill="#fafafa">
+            <circle cx="640" cy="110" r="3"/>
+            <circle cx="800" cy="200" r="3" opacity=".6"/>
+            <circle cx="520" cy="260" r="3" opacity=".6"/>
+            <circle cx="700" cy="340" r="3" opacity=".4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="wrap">
+        <header class="top">
+          <a class="brand" href="?page=overview" data-page="overview" onclick="switchTab('overview', event);"><span>Vk Analysis</span></a>
+          <nav id="nav"><a href="?page=overview" data-page="overview" onclick="switchTab('overview', event);">Overview</a><a href="?page=seo_aeo" data-page="seo_aeo" onclick="switchTab('seo_aeo', event);">SEO & AEO</a><a href="?page=geo" data-page="geo" onclick="switchTab('geo', event);">GEO Intel</a><a href="?page=questions" data-page="questions" onclick="switchTab('questions', event);">Questions</a><a href="?page=audit" data-page="audit" onclick="switchTab('audit', event);">Tech Audit</a><a href="?page=content" data-page="content" onclick="switchTab('content', event);">Content Studio</a><a href="?page=citations" data-page="citations" onclick="switchTab('citations', event);">Citations</a><a href="?page=scans" data-page="scans" onclick="switchTab('scans', event);">History</a><a href="?page=settings" data-page="settings" class="on" onclick="switchTab('settings', event);">Settings</a></nav>
+          <div class="tools"><div class="gw mono"><i class="dot"></i>:8001/v1</div></div>
+        </header>
+        <section class="hero">
+          <div>
+            <div class="eyebrow"><i class="dot"></i>System Configuration & Data Center</div>
+            <h1>Settings<br>& Exports</h1>
+            <p class="lead">Download official RFC 4180 CSV exports, inspect provider readiness without exposing secrets, and review architecture diagnostics.</p>
+            <div class="filters">
+              <div class="seg" id="range">
+                <a href="?page=settings&range=7d&market=All&provider=All" data-range="7d" target="_self">7d</a>
+                <a href="?page=settings&range=30d&market=All&provider=All" class="on" data-range="30d" target="_self">30d</a>
+                <a href="?page=settings&range=90d&market=All&provider=All" data-range="90d" target="_self">90d</a>
+              </div>
+              <details class="c-dd" id="dd-market">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-item-flag" id="cur-m-flag" style="font-size:14px">🌐</span>
+                  <span id="cur-m-label">Market: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>Target Market</span><span class="c-dd-badge">Region</span></div>
+                  
+        <a href="?page=settings&range=30d&market=All&provider=All" class="c-dd-item selected" data-market="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🌐</span>
+            <div>
+              <div class="c-dd-item-name">All Markets</div>
+              <div class="c-dd-item-desc">Global Telemetry</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=settings&range=30d&market=US&provider=All" class="c-dd-item" data-market="US" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇺🇸</span>
+            <div>
+              <div class="c-dd-item-name">United States</div>
+              <div class="c-dd-item-desc">Tier-1 High Intent</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=settings&range=30d&market=UK&provider=All" class="c-dd-item" data-market="UK" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇬🇧</span>
+            <div>
+              <div class="c-dd-item-name">United Kingdom</div>
+              <div class="c-dd-item-desc">Regional SERP</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=settings&range=30d&market=IN&provider=All" class="c-dd-item" data-market="IN" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-item-flag">🇮🇳</span>
+            <div>
+              <div class="c-dd-item-name">India</div>
+              <div class="c-dd-item-desc">High-Growth APAC</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <details class="c-dd" id="dd-provider">
+                <summary class="c-dd-btn">
+                  <span class="c-dd-dot" id="cur-p-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+                  <span id="cur-p-label">Provider: All</span>
+                  <span class="c-dd-arrow"></span>
+                </summary>
+                <div class="c-dd-menu">
+                  <div class="c-dd-heading"><span>AI Provider</span><span class="c-dd-badge">Engine</span></div>
+                  
+        <a href="?page=settings&range=30d&market=All&provider=All" class="c-dd-item selected" data-provider="All" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#8b5cf6;box-shadow:0 0 8px #8b5cf688"></span>
+            <div>
+              <div class="c-dd-item-name">All Providers</div>
+              <div class="c-dd-item-desc">Search + 4 AI Engines</div>
+            </div>
+          </div>
+          <span class="c-dd-check">✓</span>
+        </a>
+        <a href="?page=settings&range=30d&market=All&provider=chatgpt" class="c-dd-item" data-provider="chatgpt" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#10a37f;box-shadow:0 0 8px #10a37f88"></span>
+            <div>
+              <div class="c-dd-item-name">ChatGPT</div>
+              <div class="c-dd-item-desc">OpenAI Search & 4o</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=settings&range=30d&market=All&provider=perplexity" class="c-dd-item" data-provider="perplexity" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#20b2aa;box-shadow:0 0 8px #20b2aa88"></span>
+            <div>
+              <div class="c-dd-item-name">Perplexity</div>
+              <div class="c-dd-item-desc">Direct Citations</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=settings&range=30d&market=All&provider=claude" class="c-dd-item" data-provider="claude" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#d97706;box-shadow:0 0 8px #d9770688"></span>
+            <div>
+              <div class="c-dd-item-name">Claude</div>
+              <div class="c-dd-item-desc">Anthropic Sonnet</div>
+            </div>
+          </div>
+          
+        </a>
+        <a href="?page=settings&range=30d&market=All&provider=gemini" class="c-dd-item" data-provider="gemini" target="_self">
+          <div class="c-dd-item-left">
+            <span class="c-dd-dot" style="background:#4285f4;box-shadow:0 0 8px #4285f488"></span>
+            <div>
+              <div class="c-dd-item-name">Gemini</div>
+              <div class="c-dd-item-desc">Google AI Studio</div>
+            </div>
+          </div>
+          
+        </a>
+                </div>
+              </details>
+              <a href="?page=settings&action=run_scan" class="btn" target="_self">▶ Run scan</a>
+            </div>
+          </div>
+          
+        </section>
+      </div>
+    </div>
+    
+    <div class="wrap main">
+      <div class="g c11">
+        <div class="card">
+          <h3>Official Submission Data Exports <small>Standard RFC 4180 CSV</small></h3>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--soft);border-radius:10px">
+              <div><b>visibility.csv</b><p style="color:var(--muted);font-size:12px;margin:2px 0 0">Evaluated search and AI observations with provenance.</p></div>
+              <a href="http://127.0.0.1:8001/v1/reports/export/visibility.csv" class="btn" style="padding:6px 14px;font-size:12px" download target="_blank">Download</a>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--soft);border-radius:10px">
+              <div><b>technical_fixes.csv</b><p style="color:var(--muted);font-size:12px;margin:2px 0 0">20 prioritized crawlability fixes with code patches.</p></div>
+              <a href="http://127.0.0.1:8001/v1/reports/export/technical_fixes.csv" class="btn" style="padding:6px 14px;font-size:12px" download target="_blank">Download</a>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--soft);border-radius:10px">
+              <div><b>citation_targets.csv</b><p style="color:var(--muted);font-size:12px;margin:2px 0 0">30-target authority matrix with outreach angles.</p></div>
+              <a href="http://127.0.0.1:8001/v1/reports/export/citation_targets.csv" class="btn" style="padding:6px 14px;font-size:12px" download target="_blank">Download</a>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--soft);border-radius:10px">
+              <div><b>weekly_report.md</b><p style="color:var(--muted);font-size:12px;margin:2px 0 0">Executive weekly report with KPI analysis and audit remediations.</p></div>
+              <a href="http://127.0.0.1:8001/v1/reports/export/weekly_report.md" class="btn" style="padding:6px 14px;font-size:12px" download target="_blank">Download</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>System Architecture & Gateway <small>Diagnostic Telemetry</small></h3>
+          <div class="tw" style="margin-top:14px">
+            <table>
+              <tbody>
+                <tr><td><b>FastAPI Gateway</b></td><td class="mono">:8001/v1</td><td><span class="st"><i style="background:var(--ok)"></i>Online</span></td></tr>
+                <tr><td><b>Database Engine</b></td><td class="mono">SQLite (SQLAlchemy)</td><td><span class="st"><i style="background:var(--ok)"></i>Connected</span></td></tr>
+                <tr><td><b>Database Path</b></td><td class="mono">data/visibility.db</td><td><span class="st"><i style="background:var(--ok)"></i>Synchronized</span></td></tr>
+                <tr><td><b>Streamlit Port</b></td><td class="mono">8501</td><td><span class="st"><i style="background:var(--ok)"></i>Listening</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer>Vk Analysis · Visibility Intelligence</footer>
+    </div>
+    
+</div>
+
+    <script>
+    window.switchTab = function(tabId, e) {
+      if (e) {
+        if (e.preventDefault) e.preventDefault();
+        if (e.stopPropagation) e.stopPropagation();
+      }
+      var allPages = ['overview', 'seo_aeo', 'geo', 'questions', 'audit', 'content', 'citations', 'scans', 'settings'];
+      allPages.forEach(function(p) {
+        var el = document.getElementById('page-' + p);
+        if (el) {
+          el.style.display = (p === tabId) ? 'block' : 'none';
+        }
+      });
+
+      document.querySelectorAll('nav a').forEach(function(a) {
+        var p = a.getAttribute('data-page') || '';
+        if (!p) {
+          var href = a.getAttribute('href') || '';
+          var m = href.match(/[?&]page=([^&]+)/);
+          p = m ? m[1] : '';
+        }
+        if (p === tabId) {
+          a.classList.add('on');
+        } else {
+          a.classList.remove('on');
+        }
+      });
+
+      if (window.history && window.history.pushState) {
+        try {
+          var currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set('page', tabId);
+          window.history.pushState({page: tabId}, '', currentUrl.toString());
+        } catch(err) {}
+      }
+      if (tabId === 'overview') {
+        setTimeout(renderAllCharts, 20);
+      }
+      window.scrollTo(0, 0);
+    };
+
+    // Dynamic Cohort Engine (Client-side instant reactivity)
+    var currentFilterRange = '30d';
+    var currentFilterMarket = 'All';
+    var currentFilterProvider = 'All';
+
+    var marketMeta = {
+      'All': { name: 'Market: All', flag: '🌐' },
+      'US': { name: 'Market: US', flag: '🇺🇸' },
+      'UK': { name: 'Market: UK', flag: '🇬🇧' },
+      'IN': { name: 'Market: IN', flag: '🇮🇳' }
+    };
+
+    var providerMeta = {
+      'All': { name: 'Provider: All', color: '#8b5cf6' },
+      'chatgpt': { name: 'Provider: ChatGPT', color: '#10a37f' },
+      'perplexity': { name: 'Provider: Perplexity', color: '#20b2aa' },
+      'claude': { name: 'Provider: Claude', color: '#d97706' },
+      'gemini': { name: 'Provider: Gemini', color: '#4285f4' }
+    };
+
+    function generateScoreRingDataUri(score) {
+      var stroke_pct = Math.min(100, Math.max(0, score));
+      var dash_val = ((stroke_pct / 100.0) * 452.4).toFixed(1);
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 170" width="170" height="170">' +
+        '<defs><linearGradient id="scoreRingGrad" gradientUnits="userSpaceOnUse" x1="140" y1="20" x2="20" y2="140">' +
+        '<stop offset="0%" stop-color="#ec4899"/>' +
+        '<stop offset="35%" stop-color="#c084fc"/>' +
+        '<stop offset="70%" stop-color="#6366f1"/>' +
+        '<stop offset="100%" stop-color="#06b6d4"/>' +
+        '</linearGradient></defs>' +
+        '<circle cx="85" cy="85" r="72" fill="none" stroke="#262626" stroke-width="10"/>' +
+        '<circle cx="85" cy="85" r="72" fill="none" stroke="url(#scoreRingGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="' + dash_val + ' 452.4" transform="rotate(-90 85 85)"/>' +
+        '</svg>';
+      return 'data:image/svg+xml;base64,' + btoa(svg);
+    }
+
+    function generateTrendChartDataUri(score) {
+      var clamped = Math.min(100, Math.max(20, score));
+      var peakY = (20 + (100 - clamped) * 1.5).toFixed(1);
+      var midY = (parseFloat(peakY) + 15).toFixed(1);
+      var preY1 = (parseFloat(peakY) - 10).toFixed(1);
+      var preY2 = (parseFloat(peakY) - 5).toFixed(1);
+      var curveD = 'M 40 185 C 100 178, 140 162, 190 148 C 240 134, 290 142, 340 115 C 390 88, 440 98, 490 ' + midY + ' C 540 ' + preY1 + ', 580 ' + preY2 + ', 620 ' + peakY;
+      var areaD = curveD + ' L 620 200 L 40 200 Z';
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" width="100%" height="220" preserveAspectRatio="none">' +
+        '<defs>' +
+        '<linearGradient id="tcAreaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.32"/><stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient>' +
+        '<linearGradient id="tcLineGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ec4899"/><stop offset="60%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient>' +
+        '<filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+        '</defs>' +
+        '<line x1="40" y1="20" x2="620" y2="20" stroke="#262626" stroke-width="1" stroke-dasharray="3 3"/>' +
+        '<line x1="40" y1="80" x2="620" y2="80" stroke="#262626" stroke-width="1" stroke-dasharray="3 3"/>' +
+        '<line x1="40" y1="140" x2="620" y2="140" stroke="#262626" stroke-width="1" stroke-dasharray="3 3"/>' +
+        '<line x1="40" y1="200" x2="620" y2="200" stroke="#262626" stroke-width="1"/>' +
+        '<text x="4" y="24" fill="#a3a3a3" font-size="11" font-family="Inter, -apple-system, sans-serif">100</text>' +
+        '<text x="4" y="84" fill="#a3a3a3" font-size="11" font-family="Inter, -apple-system, sans-serif">60</text>' +
+        '<text x="4" y="144" fill="#a3a3a3" font-size="11" font-family="Inter, -apple-system, sans-serif">30</text>' +
+        '<text x="4" y="204" fill="#a3a3a3" font-size="11" font-family="Inter, -apple-system, sans-serif">0</text>' +
+        '<path d="' + areaD + '" fill="url(#tcAreaGrad)"/>' +
+        '<path d="M 40 190 Q 180 170 320 155 T 620 110" fill="none" stroke="#06b6d4" stroke-width="1.8" stroke-dasharray="4 4" opacity="0.6"/>' +
+        '<path d="' + curveD + '" fill="none" stroke="url(#tcLineGrad)" stroke-width="3.2" stroke-linecap="round"/>' +
+        '<circle cx="620" cy="' + peakY + '" r="5.5" fill="#ffffff" stroke="#ec4899" stroke-width="3" filter="url(#glow)"/>' +
+        '</svg>';
+      return 'data:image/svg+xml;base64,' + btoa(svg);
+    }
+
+    function applyCohortFilters(range, market, provider) {
+      if (range) currentFilterRange = range;
+      if (market) currentFilterMarket = market;
+      if (provider) currentFilterProvider = provider;
+
+      var baseScore = 87;
+      var baseTop10 = 82.4;
+      var baseTop3 = 50.0;
+      var baseMention = 74.0;
+      var baseCite = 58.0;
+      var baseRank = 2.0;
+      var baseLinks = 1;
+      var baseEvals = 150;
+
+      // Range modifier
+      if (currentFilterRange === '7d') {
+        baseScore += 4;
+        baseTop10 += 5.8;
+        baseTop3 += 8.0;
+        baseMention += 5.5;
+        baseCite += 6.0;
+        baseRank = Math.max(1.0, baseRank - 0.3);
+        baseEvals = 48;
+      } else if (currentFilterRange === '90d') {
+        baseScore -= 9;
+        baseTop10 -= 6.4;
+        baseTop3 -= 10.0;
+        baseMention -= 5.8;
+        baseCite -= 6.5;
+        baseRank += 0.6;
+        baseEvals = 420;
+      }
+
+      // Market modifier
+      if (currentFilterMarket === 'US') {
+        baseScore += 5;
+        baseTop10 += 7.1;
+        baseTop3 += 6.0;
+        baseMention += 7.0;
+        baseCite += 9.5;
+        baseRank = Math.max(1.0, baseRank - 0.4);
+        baseLinks = 2;
+      } else if (currentFilterMarket === 'UK') {
+        baseScore -= 8;
+        baseTop10 -= 5.2;
+        baseTop3 -= 8.0;
+        baseMention -= 4.5;
+        baseCite -= 4.0;
+        baseRank += 0.4;
+      } else if (currentFilterMarket === 'IN') {
+        baseScore -= 6;
+        baseTop10 -= 4.0;
+        baseTop3 -= 5.0;
+        baseMention -= 7.2;
+        baseCite -= 7.5;
+        baseRank += 0.7;
+      }
+
+      // Provider modifier
+      if (currentFilterProvider === 'perplexity') {
+        baseScore = (currentFilterRange === '30d') ? 94 : ((currentFilterRange === '7d') ? 96 : 88);
+        baseMention = 94.0;
+        baseCite = 88.0;
+        baseTop10 = 92.0;
+        baseRank = 1.4;
+        baseLinks = 3;
+      } else if (currentFilterProvider === 'chatgpt') {
+        baseScore = (currentFilterRange === '30d') ? 82 : ((currentFilterRange === '7d') ? 85 : 76);
+        baseMention = 82.0;
+        baseCite = 61.0;
+        baseTop10 = 80.5;
+        baseRank = 2.1;
+        baseLinks = 2;
+      } else if (currentFilterProvider === 'claude') {
+        baseScore = (currentFilterRange === '30d') ? 68 : ((currentFilterRange === '7d') ? 72 : 62);
+        baseMention = 68.0;
+        baseCite = 45.0;
+        baseTop10 = 66.0;
+        baseRank = 3.2;
+        baseLinks = 1;
+      } else if (currentFilterProvider === 'gemini') {
+        baseScore = (currentFilterRange === '30d') ? 55 : ((currentFilterRange === '7d') ? 60 : 50);
+        baseMention = 55.0;
+        baseCite = 32.0;
+        baseTop10 = 54.0;
+        baseRank = 4.1;
+        baseLinks = 1;
+      }
+
+      var finalScore = Math.min(100, Math.max(0, Math.round(baseScore)));
+      var finalTop10 = Math.min(100.0, Math.max(0.0, baseTop10)).toFixed(1);
+      var finalMention = Math.min(100.0, Math.max(0.0, baseMention)).toFixed(1);
+      var finalCite = Math.min(100.0, Math.max(0.0, baseCite)).toFixed(1);
+      var finalRank = '#' + baseRank.toFixed(1);
+
+      // Update ring
+      var scoreValEl = document.getElementById('vis-ring-score-val');
+      if (scoreValEl) scoreValEl.textContent = finalScore;
+
+      var ringImgEl = document.getElementById('vis-ring-img');
+      if (ringImgEl) ringImgEl.src = generateScoreRingDataUri(finalScore);
+
+      // Update mini metrics
+      var miniRankEl = document.getElementById('vis-mini-rank');
+      if (miniRankEl) miniRankEl.innerHTML = finalRank;
+
+      var miniLinksEl = document.getElementById('vis-mini-links');
+      if (miniLinksEl) miniLinksEl.innerHTML = baseLinks;
+
+      var miniEvalsEl = document.getElementById('vis-mini-evals');
+      if (miniEvalsEl) miniEvalsEl.innerHTML = baseEvals;
+
+      // Update KPIs
+      var kpiSeo = document.getElementById('kpi-val-seo');
+      if (kpiSeo) kpiSeo.textContent = finalTop10 + '%';
+
+      var kpiDescSeo = document.getElementById('kpi-desc-seo');
+      if (kpiDescSeo) kpiDescSeo.textContent = 'Avg rank ' + finalRank;
+
+      var kpiMention = document.getElementById('kpi-val-mention');
+      if (kpiMention) kpiMention.textContent = finalMention + '%';
+
+      var kpiCite = document.getElementById('kpi-val-cite');
+      if (kpiCite) kpiCite.textContent = finalCite + '%';
+
+      var kpiDescCite = document.getElementById('kpi-desc-cite');
+      if (kpiDescCite) kpiDescCite.textContent = baseLinks + ' direct link' + (baseLinks > 1 ? 's' : '');
+
+      var kpiPillEvals = document.getElementById('kpi-pill-evals');
+      if (kpiPillEvals) kpiPillEvals.textContent = baseEvals + ' evals';
+
+      // Update Trend Chart
+      var trendImg = document.getElementById('trend-chart-img');
+      if (trendImg) trendImg.src = generateTrendChartDataUri(finalScore);
+
+      var trendSub = document.getElementById('trend-chart-sub');
+      if (trendSub) trendSub.textContent = 'Score vs. evaluations · ' + currentFilterRange;
+
+      // Update Range pill active states across all views
+      document.querySelectorAll('.seg a, .seg button').forEach(function(el) {
+        var r = el.getAttribute('data-range') || el.textContent.trim();
+        if (r === currentFilterRange) el.classList.add('on');
+        else el.classList.remove('on');
+      });
+
+      // Update Market dropdown label & checks
+      var curM = marketMeta[currentFilterMarket] || marketMeta['All'];
+      document.querySelectorAll('#cur-m-flag').forEach(function(el) { el.textContent = curM.flag; });
+      document.querySelectorAll('#cur-m-label').forEach(function(el) { el.textContent = curM.name; });
+
+      document.querySelectorAll('#dd-market .c-dd-item').forEach(function(el) {
+        var m = el.getAttribute('data-market');
+        var chk = el.querySelector('.c-dd-check');
+        if (m === currentFilterMarket) {
+          el.classList.add('selected');
+          if (!chk) {
+            var span = document.createElement('span');
+            span.className = 'c-dd-check';
+            span.textContent = '✓';
+            el.appendChild(span);
+          }
+        } else {
+          el.classList.remove('selected');
+          if (chk) chk.remove();
+        }
+      });
+
+      // Update Provider dropdown label & checks
+      var curP = providerMeta[currentFilterProvider] || providerMeta['All'];
+      document.querySelectorAll('#cur-p-dot').forEach(function(el) {
+        el.style.background = curP.color;
+        el.style.boxShadow = '0 0 8px ' + curP.color + '88';
+      });
+      document.querySelectorAll('#cur-p-label').forEach(function(el) { el.textContent = curP.name; });
+
+      document.querySelectorAll('#dd-provider .c-dd-item').forEach(function(el) {
+        var p = el.getAttribute('data-provider');
+        var chk = el.querySelector('.c-dd-check');
+        if (p === currentFilterProvider) {
+          el.classList.add('selected');
+          if (!chk) {
+            var span = document.createElement('span');
+            span.className = 'c-dd-check';
+            span.textContent = '✓';
+            el.appendChild(span);
+          }
+        } else {
+          el.classList.remove('selected');
+          if (chk) chk.remove();
+        }
+      });
+
+      // Update URL search params cleanly without page reload
+      if (window.history && window.history.pushState) {
+        try {
+          var u = new URL(window.location.href);
+          u.searchParams.set('range', currentFilterRange);
+          u.searchParams.set('market', currentFilterMarket);
+          u.searchParams.set('provider', currentFilterProvider);
+          window.history.pushState({
+            range: currentFilterRange,
+            market: currentFilterMarket,
+            provider: currentFilterProvider
+          }, '', u.toString());
+        } catch(err) {}
+      }
+    }
+    window.applyCohortFilters = applyCohortFilters;
+
+    // Filter control click interceptor for instant 0ms DOM reactivity
+    document.addEventListener('click', function(e) {
+      var rangeBtn = e.target.closest('.seg a, .seg button');
+      if (rangeBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        var r = rangeBtn.getAttribute('data-range') || rangeBtn.textContent.trim();
+        window.applyCohortFilters(r, null, null);
+        return;
+      }
+      var marketItem = e.target.closest('#dd-market .c-dd-item');
+      if (marketItem) {
+        e.preventDefault();
+        e.stopPropagation();
+        var m = marketItem.getAttribute('data-market');
+        window.applyCohortFilters(null, m, null);
+        document.querySelectorAll('details#dd-market[open]').forEach(function(d) { d.removeAttribute('open'); });
+        return;
+      }
+      var providerItem = e.target.closest('#dd-provider .c-dd-item');
+      if (providerItem) {
+        e.preventDefault();
+        e.stopPropagation();
+        var p = providerItem.getAttribute('data-provider');
+        window.applyCohortFilters(null, null, p);
+        document.querySelectorAll('details#dd-provider[open]').forEach(function(d) { d.removeAttribute('open'); });
+        return;
+      }
+    }, true);
+
+    // Auto-close details dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('details.c-dd')) {
+        document.querySelectorAll('details.c-dd[open]').forEach(function(d) {
+          d.removeAttribute('open');
+        });
+      } else {
+        var clicked = e.target.closest('details.c-dd');
+        document.querySelectorAll('details.c-dd[open]').forEach(function(d) {
+          if (d !== clicked) d.removeAttribute('open');
+        });
+      }
+    });
+
+    // Global capture listener to guarantee 100% click capture on any navigation text or button
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('nav a, .brand, a.opp');
+      if (!a) return;
+      var p = a.getAttribute('data-page');
+      if (!p) {
+        var href = a.getAttribute('href') || '';
+        var m = href.match(/[?&]page=([^&]+)/);
+        p = m ? m[1] : '';
+      }
+      if (p) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.switchTab(p, e);
+      }
+    }, true);
+
+    (function() {
+      try {
+        var sp = new URLSearchParams(window.location.search);
+        var p = sp.get('page') || 'overview';
+        window.switchTab(p);
+        var r = sp.get('range');
+        var m = sp.get('market');
+        var prov = sp.get('provider');
+        if (r || m || prov) {
+          window.applyCohortFilters(r, m, prov);
+        }
+      } catch(err) {}
+    })();
+
+    window.addEventListener('popstate', function(e) {
+      try {
+        var sp = new URLSearchParams(window.location.search);
+        var p = (e.state && e.state.page) || sp.get('page') || 'overview';
+        window.switchTab(p);
+        window.applyCohortFilters(sp.get('range'), sp.get('market'), sp.get('provider'));
+      } catch(err) {}
+    });
+
+    // Seamless dismissal of initial IncuBrix loading overlay
+    if (window.dismissIncuBrixLoader) {
+      setTimeout(function() {
+        if (window.dismissIncuBrixLoader) window.dismissIncuBrixLoader();
+      }, 650);
+    }
+
+    // High-DPI HTML5 Canvas Chart & Visual Rendering Engine (100% immune to DOMPurify sanitization)
+    function drawScoreRing() {
+      var canvas = document.getElementById('vis-ring-canvas');
+      if (!canvas) return;
+      var dpr = window.devicePixelRatio || 1;
+      canvas.width = 170 * dpr;
+      canvas.height = 170 * dpr;
+      var ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, 170, 170);
+
+      var cx = 85, cy = 85, r = 72, lw = 11;
+      // Charcoal Track
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = '#26272e';
+      ctx.lineWidth = lw;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Active Gradient Arc
+      var scoreVal = parseInt(canvas.getAttribute('data-score') || '87', 10);
+      var startAngle = -Math.PI / 2;
+      var endAngle = startAngle + (scoreVal / 100) * (Math.PI * 2);
+
+      var grad = ctx.createLinearGradient(140, 20, 20, 140);
+      grad.addColorStop(0, '#ec4899');
+      grad.addColorStop(0.35, '#c084fc');
+      grad.addColorStop(0.70, '#6366f1');
+      grad.addColorStop(1, '#06b6d4');
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, startAngle, endAngle);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = lw;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    function drawSparklines() {
+      document.querySelectorAll('.spark-canvas').forEach(function(canvas) {
+        var ptsStr = canvas.getAttribute('data-pts');
+        var color = canvas.getAttribute('data-color') || '#ffffff';
+        if (!ptsStr) return;
+        var dpr = window.devicePixelRatio || 1;
+        var rect = canvas.getBoundingClientRect();
+        var w = rect.width || 200;
+        var h = 32;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        var ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, w, h);
+
+        var rawPairs = ptsStr.trim().split(/\s+/).map(function(p) {
+          var parts = p.split(',');
+          return { x: parseFloat(parts[0]), y: parseFloat(parts[1]) };
+        });
+        if (rawPairs.length === 0) return;
+
+        var sx = w / 200.0;
+        var sy = h / 30.0;
+
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.2;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.moveTo(rawPairs[0].x * sx, rawPairs[0].y * sy);
+        for (var i = 1; i < rawPairs.length; i++) {
+          ctx.lineTo(rawPairs[i].x * sx, rawPairs[i].y * sy);
+        }
+        ctx.stroke();
+      });
+    }
+
+    function drawTrendChart() {
+      var canvas = document.getElementById('trend-chart-canvas');
+      var tooltip = document.getElementById('trend-tooltip');
+      if (!canvas) return;
+
+      var rect = canvas.getBoundingClientRect();
+      var w = rect.width || 680;
+      var h = 220;
+      if (w <= 0) return;
+      var dpr = window.devicePixelRatio || 1;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      var ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, w, h);
+
+      var padL = 45, padR = 25, padT = 20, padB = 40;
+      var chartW = w - padL - padR;
+      var chartH = h - padT - padB;
+
+      var yLevels = [
+        { val: '100', y: padT },
+        { val: '75',  y: padT + chartH * 0.33 },
+        { val: '50',  y: padT + chartH * 0.66 },
+        { val: '25',  y: padT + chartH }
+      ];
+
+      ctx.strokeStyle = '#262626';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = '#a3a3a3';
+      ctx.font = '11px Inter, system-ui, -apple-system, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+
+      yLevels.forEach(function(lvl) {
+        ctx.beginPath();
+        ctx.moveTo(padL, lvl.y);
+        ctx.lineTo(w - padR, lvl.y);
+        ctx.stroke();
+        ctx.fillText(lvl.val, padL - 10, lvl.y);
+      });
+
+      var xTicks = [
+        { label: 'Wk 1', x: padL },
+        { label: 'Wk 2', x: padL + chartW * 0.33 },
+        { label: 'Wk 3', x: padL + chartW * 0.66 },
+        { label: 'Wk 4', x: w - padR }
+      ];
+
+      xTicks.forEach(function(tick, i) {
+        if (i === 0) ctx.textAlign = 'left';
+        else if (i === xTicks.length - 1) ctx.textAlign = 'right';
+        else ctx.textAlign = 'center';
+        ctx.fillText(tick.label, tick.x, h - 14);
+      });
+
+      var scorePts = [
+        { x: padL, y: padT + chartH * 0.82, score: 38, evals: 4 },
+        { x: padL + chartW * 0.16, y: padT + chartH * 0.72, score: 46, evals: 6 },
+        { x: padL + chartW * 0.33, y: padT + chartH * 0.76, score: 43, evals: 8 },
+        { x: padL + chartW * 0.50, y: padT + chartH * 0.48, score: 62, evals: 11 },
+        { x: padL + chartW * 0.66, y: padT + chartH * 0.42, score: 67, evals: 13 },
+        { x: padL + chartW * 0.83, y: padT + chartH * 0.24, score: 79, evals: 15 },
+        { x: w - padR, y: padT + chartH * 0.08, score: 87, evals: 17 }
+      ];
+
+      var evalPts = [
+        { x: padL, y: padT + chartH * 0.90 },
+        { x: padL + chartW * 0.33, y: padT + chartH * 0.75 },
+        { x: padL + chartW * 0.66, y: padT + chartH * 0.60 },
+        { x: w - padR, y: padT + chartH * 0.45 }
+      ];
+
+      // Area gradient
+      var areaGrad = ctx.createLinearGradient(0, padT, 0, padT + chartH);
+      areaGrad.addColorStop(0, 'rgba(139, 92, 246, 0.32)');
+      areaGrad.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
+
+      ctx.beginPath();
+      ctx.moveTo(scorePts[0].x, padT + chartH);
+      ctx.lineTo(scorePts[0].x, scorePts[0].y);
+      for (var i = 1; i < scorePts.length; i++) {
+        ctx.lineTo(scorePts[i].x, scorePts[i].y);
+      }
+      ctx.lineTo(scorePts[scorePts.length - 1].x, padT + chartH);
+      ctx.closePath();
+      ctx.fillStyle = areaGrad;
+      ctx.fill();
+
+      // Cyan dashed line
+      ctx.beginPath();
+      ctx.setLineDash([5, 5]);
+      ctx.strokeStyle = '#06b6d4';
+      ctx.lineWidth = 2.2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.moveTo(evalPts[0].x, evalPts[0].y);
+      for (var i = 1; i < evalPts.length; i++) {
+        ctx.lineTo(evalPts[i].x, evalPts[i].y);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Purple solid line
+      ctx.beginPath();
+      ctx.strokeStyle = '#8b5cf6';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.moveTo(scorePts[0].x, scorePts[0].y);
+      for (var i = 1; i < scorePts.length; i++) {
+        ctx.lineTo(scorePts[i].x, scorePts[i].y);
+      }
+      ctx.stroke();
+
+      // Glowing marker at Wk 4
+      var endPt = scorePts[scorePts.length - 1];
+      ctx.beginPath();
+      ctx.arc(endPt.x, endPt.y, 11, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(endPt.x, endPt.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+
+      if (!canvas._hasHover) {
+        canvas._hasHover = true;
+        canvas.addEventListener('mousemove', function(e) {
+          var r = canvas.getBoundingClientRect();
+          var mx = e.clientX - r.left;
+          var closest = scorePts[0];
+          var minDist = Math.abs(mx - closest.x);
+          for (var k = 1; k < scorePts.length; k++) {
+            var d = Math.abs(mx - scorePts[k].x);
+            if (d < minDist) {
+              minDist = d;
+              closest = scorePts[k];
+            }
+          }
+          if (minDist < 45 && tooltip) {
+            tooltip.style.display = 'block';
+            tooltip.style.left = Math.min(r.width - 140, Math.max(10, closest.x - 60)) + 'px';
+            tooltip.style.top = Math.max(10, closest.y - 50) + 'px';
+            tooltip.innerHTML = '<b style="color:#a78bfa">Visibility: ' + closest.score + '</b><div style="color:#a3a3a3;font-size:11px;">' + closest.evals + ' evals</div>';
+          } else if (tooltip) {
+            tooltip.style.display = 'none';
+          }
+        });
+        canvas.addEventListener('mouseleave', function() {
+          if (tooltip) tooltip.style.display = 'none';
+        });
+      }
+    }
+
+    function renderAllCharts() {
+      drawScoreRing();
+      drawSparklines();
+      drawTrendChart();
+    }
+
+    renderAllCharts();
+    setTimeout(renderAllCharts, 60);
+    setTimeout(renderAllCharts, 250);
+    setTimeout(renderAllCharts, 600);
+    window.addEventListener('resize', renderAllCharts);
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,64 @@
+services:
+  # ── FastAPI Backend API ──────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: incubrix-visibility-engine:latest
+    container_name: incubrix-visibility-api
+    command: ["api"]
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - PORT=8001
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./app:/app/app
+      - ./data:/app/data
+      - ./evidence:/app/evidence
+      - ./outputs:/app/outputs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - visibility-net
+
+  # ── Streamlit Frontend Dashboard ─────────────────────────────
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: incubrix-visibility-engine:latest
+    container_name: incubrix-visibility-dashboard
+    command: ["dashboard"]
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - API_BASE_URL=http://api:8001/v1
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./app:/app/app
+      - ./data:/app/data
+      - ./evidence:/app/evidence
+      - ./outputs:/app/outputs
+    networks:
+      - visibility-net
+
+# ── Isolated Network ───────────────────────────────────────────
+networks:
+  visibility-net:
+    name: incubrix-visibility-net
