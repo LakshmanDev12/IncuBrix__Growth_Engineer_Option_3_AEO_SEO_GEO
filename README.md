@@ -28,6 +28,8 @@
 </p>
 
 [🌐 Live Cloud App](https://visibility-dashboard.onrender.com/) •
+[🩺 API Health](https://incubrix-visibility-engine.onrender.com/) •
+[🧪 Swagger UI](https://incubrix-visibility-engine.onrender.com/docs) •
 [🚀 Quick Start](#-quick-start-in-60-seconds) •
 [🏛️ Architecture](#-system-architecture) •
 [📊 Dashboard Showcase](#-dashboard-showcase-9-views) •
@@ -48,13 +50,14 @@ Experience the production engine in action immediately without installing local 
 | Environment | Service URL | Description | Status |
 | :--- | :--- | :--- | :---: |
 | **Production Dashboard** | [**visibility-dashboard.onrender.com**](https://visibility-dashboard.onrender.com/) | Live interactive executive dashboard with all 9 analysis views | ![Live](https://img.shields.io/badge/STATUS-ONLINE-00C7B7?style=flat-square) |
-| **REST API Gateway** | [**visibility-dashboard.onrender.com/health**]((https://incubrix-visibility-engine.onrender.com/)) | High-performance FastAPI backend providing telemetry endpoints | ![Healthy](https://img.shields.io/badge/HEALTH-PASSING-22C55E?style=flat-square) |
+| **FastAPI Health** | [**incubrix-visibility-engine.onrender.com**](https://incubrix-visibility-engine.onrender.com/) | High-performance FastAPI backend providing telemetry endpoints | ![Healthy](https://img.shields.io/badge/HEALTH-PASSING-22C55E?style=flat-square) |
+| **Swagger UI** | [**incubrix-visibility-engine.onrender.com/docs**](https://incubrix-visibility-engine.onrender.com/docs) | Interactive OpenAPI interface to explore and test every REST endpoint | ![Docs](https://img.shields.io/badge/SWAGGER-INTERACTIVE-85EA2D?style=flat-square&logo=swagger&logoColor=black) |
 | **Code Repository** | [**GitHub: IncuBrix Option 3**](https://github.com/LakshmanDev12/IncuBrix__Growth_Engineer_Option_3_AEO_SEO_GEO) | Complete open-source pipeline with 146 passing tests | ![Tracked](https://img.shields.io/badge/REPO-PRIVATE_SECURE-8B5CF6?style=flat-square) |
 
 </div>
 
 > [!TIP]
-> **Zero-Friction Evaluation**: Reviewers can evaluate all live charts, question evidence, 20 code patches, 10 content pages, and 30 citation targets directly in the cloud at [**https://visibility-dashboard.onrender.com/**](https://visibility-dashboard.onrender.com/).
+> **Zero-Friction Evaluation**: Reviewers can evaluate all live charts, question evidence, 20 code patches, 10 content pages, and 30 citation targets directly in the cloud at [**https://visibility-dashboard.onrender.com/**](https://visibility-dashboard.onrender.com/). The REST API can be explored and tested live through the [**Swagger UI**](https://incubrix-visibility-engine.onrender.com/docs).
 
 ---
 
@@ -121,7 +124,7 @@ flowchart TD
 ## 🚀 Quick Start in 60 Seconds
 
 ### Option A: Open the Live Cloud App (Instant)
-Simply click **[https://visibility-dashboard.onrender.com/](https://visibility-dashboard.onrender.com/)** to explore the fully functional dashboard hosted on Render.
+Simply click **[https://visibility-dashboard.onrender.com/](https://visibility-dashboard.onrender.com/)** to explore the fully functional dashboard hosted on Render. To try the API directly, open the **[Swagger UI](https://incubrix-visibility-engine.onrender.com/docs)**.
 
 ### Option B: Run Locally from Source
 
@@ -154,6 +157,8 @@ streamlit run app/frontend/app.py --server.port 8501
 * 🌐 **Local Interactive Dashboard**: [http://127.0.0.1:8501](http://127.0.0.1:8501)
 * 📖 **Local REST API Docs**: [http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)
 * ☁️ **Production Cloud App**: [https://visibility-dashboard.onrender.com/](https://visibility-dashboard.onrender.com/)
+* 🩺 **Cloud API Health**: [https://incubrix-visibility-engine.onrender.com/](https://incubrix-visibility-engine.onrender.com/)
+* 🧪 **Cloud Swagger UI**: [https://incubrix-visibility-engine.onrender.com/docs](https://incubrix-visibility-engine.onrender.com/docs)
 
 ---
 
@@ -291,6 +296,8 @@ docker run -d -p 8001:8001 -p 8501:8501 --name incubrix-app incubrix-visibility-
 <details>
 <summary><b>📡 REST API Endpoints Overview (Click to Expand)</b></summary>
 
+Try these live in the cloud **[Swagger UI](https://incubrix-visibility-engine.onrender.com/docs)**, or locally at [http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs).
+
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `GET` | `/health` | Service health and database connection check |
@@ -318,6 +325,7 @@ docker run -d -p 8001:8001 -p 8501:8501 --name incubrix-app incubrix-visibility-
 **Goal Achieved**: Complete compliance across all requirements of **Option 3: AEO, SEO and GEO Visibility Engine** for the IncuBrix Growth Engineer role (**Exceptional Hire Tier | 85+ Points**).
 
 *Candidate: **Lakshmandev Vk** (`24i433@psgtech.ac.in`) • PSG College of Technology, Coimbatore*<br>
-*Live Cloud Dashboard: **[https://visibility-dashboard.onrender.com/](https://visibility-dashboard.onrender.com/)***
+*Live Cloud Dashboard: **[https://visibility-dashboard.onrender.com/](https://visibility-dashboard.onrender.com/)***<br>
+*Live Cloud API: **[Health](https://incubrix-visibility-engine.onrender.com/)** • **[Swagger UI](https://incubrix-visibility-engine.onrender.com/docs)***
 
 </div>
