@@ -48,7 +48,7 @@ Experience the production engine in action immediately without installing local 
 | Environment | Service URL | Description | Status |
 | :--- | :--- | :--- | :---: |
 | **Production Dashboard** | [**visibility-dashboard.onrender.com**](https://visibility-dashboard.onrender.com/) | Live interactive executive dashboard with all 9 analysis views | ![Live](https://img.shields.io/badge/STATUS-ONLINE-00C7B7?style=flat-square) |
-| **REST API Gateway** | [**visibility-dashboard.onrender.com/health**](https://visibility-dashboard.onrender.com/health) | High-performance FastAPI backend providing telemetry endpoints | ![Healthy](https://img.shields.io/badge/HEALTH-PASSING-22C55E?style=flat-square) |
+| **REST API Gateway** | [**visibility-dashboard.onrender.com/health**]([https://visibility-dashboard.onrender.com/health](https://incubrix-visibility-engine.onrender.com/)) | High-performance FastAPI backend providing telemetry endpoints | ![Healthy](https://img.shields.io/badge/HEALTH-PASSING-22C55E?style=flat-square) |
 | **Code Repository** | [**GitHub: IncuBrix Option 3**](https://github.com/LakshmanDev12/IncuBrix__Growth_Engineer_Option_3_AEO_SEO_GEO) | Complete open-source pipeline with 146 passing tests | ![Tracked](https://img.shields.io/badge/REPO-PRIVATE_SECURE-8B5CF6?style=flat-square) |
 
 </div>
